@@ -1,30 +1,42 @@
-(setq project-path "~/Programming/androidTest/")
+(defun fix-slashes (fpath)
+  (replace-regexp-in-string "\\\\" "/" fpath)
+  )
+
+(setq project-path "C:/Programming/androidTest/")
+(setq project-name "RTB")
 (setq file-relative-paths '("./" "Src/" "../"))
+(setq qt-dir (fix-slashes (getenv "QTDIR")))
+(setq system-include-paths '("C:/Program Files (x86)/Microsoft Visual Studio 10.0/VC/include"))
 
 ;;general compile function call "make all"
-(defun save-and-make-all ()
-  "save and call compile as make all"
+(defun save-and-run ()
+  "save, make and run"
+  (interactive)
+  (save-buffer)
+  (compile "scons -D run")
+  (message "builded!"))
+
+(defun save-and-make ()
+  "save and make"
   (interactive)
   (save-buffer)
   (compile "scons -D")
   (message "builded!"))
 
-(defun save-and-test-all ()
-  "save and call compile as make all"
+(defun save-and-test ()
+  "save, make and test"
   (interactive)
   (save-buffer)
   (compile "scons -D test")
   (message "tested!"))
 
 (defun save-and-compile ()
-  "save and call compile as make all"
+  "save and compile one file"
   (interactive)
   (save-buffer) 
- (compile (concat "scons -D "
-                   (file-relative-name project-path (file-name-directory (buffer-file-name)))
-                   ".linux-gcc/.debug/.qtSdl/"
-                   (file-relative-name (file-name-sans-extension (buffer-file-name)) project-path)
-                   ".o"))
+  (compile (concat "scons -D "
+                   (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
+                   ".cpp"))
   (message "compiled!"))
 
 (defun find-corresponding-ext-file (find-ext find-paths)
@@ -61,7 +73,8 @@
 (defun find-file-in-project () 
   (interactive)
   (shell-command 
-   (concat "cd " project-path " && find * -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | dmenu"))
+   ;(concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | qmenu"))
+   (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | sed -e s/[-0-9a-zA-Z_.]*$/\\\\0;\\\\0/g | qmenu -s ;"))
   (set-buffer (get-buffer "*Shell Command Output*"))
   (if (> (length (buffer-string)) 0)
       (find-file (concat project-path (buffer-string)))))
@@ -76,7 +89,7 @@
   (interactive)
 ;  (if (get-buffer "*Tree*") (kill-buffer (get-buffer "*Tree*")))
   (shell-command
-   (concat "cd " project-path " && find * -iname '*.cpp' -or -iname '*.h' | etags -"))
+   (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' | etags -"))
   (setq tags-file-name (concat project-path "/TAGS"))
 ;  (tags-revert-without-query)
 ;  (and verify-tags-table-function
@@ -87,44 +100,88 @@
   )
 
 (defun c-mode-init ()
-  (local-set-key (kbd "RET") 'newline-and-indent))
+  (local-set-key (kbd "RET") 'newline-and-indent)
+;  (define-key global-map "." 'semantic-complete-self-insert)
+;  (define-key global-map "\>" 'semantic-complete-self-insert)
+  (local-set-key (kbd ".") 'semantic-complete-self-insert)
+  (local-set-key (kbd ">") 'semantic-complete-self-insert)
+  (local-set-key (kbd "C-<tab>") 'semantic-complete-analyze-inline)
 
+  (setq tab-width 4)
+
+  (dolist (path system-include-paths)
+    (semantic-add-system-include path)
+    )
+
+  (if (> (length qt-dir) 0)
+      (let ()
+  	(semantic-add-system-include (concat qt-dir "include"))
+  	(semantic-add-system-include (concat qt-dir "include/QtCore"))
+  	(semantic-add-system-include (concat qt-dir "include/QtGui"))
+  	(semantic-add-system-include (concat qt-dir "include/QtOpenGL"))
+	(semantic-add-system-include (concat qt-dir "include/QtNetwork"))
+	)
+    )
+  (semantic-c-add-preprocessor-symbol "Q_GUI_EXPORT" "")
+  (semantic-c-add-preprocessor-symbol "Q_CORE_EXPORT" "")
+  (semantic-c-add-preprocessor-symbol "Q_OPENGL_EXPORT" "")
+  (semantic-c-add-preprocessor-symbol "Q_NETWORK_EXPORT" "")
+)
 (defun setup-ide ()
   "setup ide functionality"
   (interactive)
+
+  ;; (require 'semantic/bovine/c)
+  ;; (require 'semantic/bovine/gcc)
+  ;; (require 'semantic/decorate/include)
+  ;; (require 'semantic/decorate/mode)
+
   (etag-project)
   (add-hook 'c-mode-hook 'c-mode-init)
-  (add-hook 'c++-mode-hook 'c-mode-init) 
-;  (global-semantic-idle-completions-mode)
-  )
+  (add-hook 'c++-mode-hook 'c-mode-init)
+  
 
-(defun load-all-addons ()
-  "loads all addons"
-  (interactive)
-;  (setq semantic-load-turn-everything-on t)
-;  (require 'semantic-load)
-;  (require 'semanticdb)
-;  (require 'semantic-ia)	
-;  (global-semanticdb-minor-mode 1)
-;  (semanticdb-save-all-db)
-;  (semantic-load-enable-code-helpers)
-;  (setq semantic-load-turn-useful-things-on t)
-;  (setq semanticdb-project-roots
-;         (list project-path))
-  (load-file "/usr/share/emacs/site-lisp/site-gentoo.el")
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-ghci)
-  (setup-ide))
+  (global-ede-mode t)
 
-;(set-language-environment 'UTF-8)
-;
-;(global-set-key (kbd "\C-\\") 'user-toggle-input-method)
-;(global-set-key (kbd "\e(") 'user-to-cyr)
-;(global-set-key (kbd "\e)") 'user-to-nil)
+  (setq ssp-files '())
+  (dolist (path system-include-paths)
+    (add-to-list 'auto-mode-alist (cons path 'c++-mode))
+    )
+  (if (> (length qt-dir) 0)
+      (let ()
+  	(add-to-list 'auto-mode-alist (cons qt-dir 'c++-mode))
 
+  	(add-to-list 'ssp-files (concat qt-dir "include/Qt/qconfig.h"))
+  	(add-to-list 'ssp-files (concat qt-dir "include/Qt/qconfig-dist.h"))
+  	(add-to-list 'ssp-files (concat qt-dir "include/Qt/qglobal.h"))
+  	)
+    )
 
-; (toggle-input-method)
-; (user-to-cyr)
-; (user-to-nil)
+  (ede-cpp-root-project project-name
+			:file (concat project-path "SConstruct")
+			:include-path '(
+					"/Src"
+					"/ThirdParty"
+					)
+			:system-include-path '()
+			:spp-files ssp-files
+			:spp-table '())
+
+  (semantic-mode t)
+  (global-semantic-decoration-mode 1)
+  (global-semantic-show-parser-state-mode 1)
+  (semantic-toggle-decoration-style "semantic-tag-boundary" 0)
+
+)
+
+(defun cut-trailing-slash (fpath)
+  (if (or
+       (equal (substring fpath -1 (length fpath)) "/")
+       (equal (substring fpath -1 (length fpath)) "\\"))
+      (substring fpath 0 -1)
+    fpath
+    )
+)
 
 (defun cut-extension (fpath)
   (if (equal (substring fpath -1 (length fpath)) ".")
