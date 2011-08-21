@@ -125,6 +125,8 @@
   (semantic-c-add-preprocessor-symbol "Q_CORE_EXPORT" "")
   (semantic-c-add-preprocessor-symbol "Q_OPENGL_EXPORT" "")
   (semantic-c-add-preprocessor-symbol "Q_NETWORK_EXPORT" "")
+  (semantic-c-add-preprocessor-symbol "PUGIXML_CLASS" "class")
+  (semantic-c-add-preprocessor-symbol "PUGIXML_FUNCTION" "")
   )
 (defun setup-ide ()
   "setup ide functionality"
