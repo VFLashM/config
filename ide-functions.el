@@ -8,7 +8,6 @@
 (setq qt-dir (fix-slashes (getenv "QTDIR")))
 (setq system-include-paths '("C:/Program Files (x86)/Microsoft Visual Studio 10.0/VC/include"))
 
-;;general compile function call "make all"
 (defun save-and-run ()
   "save, make and run"
   (interactive)
@@ -46,9 +45,9 @@
 	       (file-name-nondirectory (concat (file-name-sans-extension (buffer-file-name)) "." find-ext))))
   (if (file-exists-p fname) 
       (find-file fname)
-      (if (> (length find-paths) 1) 
-	  (find-corresponding-ext-file find-ext (cdr find-paths))))
-)
+    (if (> (length find-paths) 1) 
+	(find-corresponding-ext-file find-ext (cdr find-paths))))
+  )
 
 (defun find-corresponding-file ()
   "find corresponding header file"
@@ -56,9 +55,9 @@
   (set 'ext (file-name-extension (buffer-file-name)))
   (if (equal ext "h")
       (find-corresponding-ext-file "cpp" file-relative-paths)
-      (if (equal ext "cpp")
-	  (find-corresponding-ext-file "h" file-relative-paths)))
-)
+    (if (equal ext "cpp")
+	(find-corresponding-ext-file "h" file-relative-paths)))
+  )
 
 (defun ebrowse-project ()
   "browse project classes"
@@ -73,7 +72,7 @@
 (defun find-file-in-project () 
   (interactive)
   (shell-command 
-   ;(concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | qmenu"))
+					;(concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | qmenu"))
    (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | sed -e s/[-0-9a-zA-Z_.]*$/\\\\0;\\\\0/g | qmenu -s ;"))
   (set-buffer (get-buffer "*Shell Command Output*"))
   (if (> (length (buffer-string)) 0)
@@ -87,22 +86,22 @@
 (defun etag-project ()
   "browse project classes"
   (interactive)
-;  (if (get-buffer "*Tree*") (kill-buffer (get-buffer "*Tree*")))
+					;  (if (get-buffer "*Tree*") (kill-buffer (get-buffer "*Tree*")))
   (shell-command
    (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' | etags -"))
   (setq tags-file-name (concat project-path "/TAGS"))
-;  (tags-revert-without-query)
-;  (and verify-tags-table-function
-;       (funcall verify-tags-table-function))
-;  (visit-tags-table tags-file-name)
-;  (find-file-read-only 
-;   (concat project-path "/BROWSE"))
+					;  (tags-revert-without-query)
+					;  (and verify-tags-table-function
+					;       (funcall verify-tags-table-function))
+					;  (visit-tags-table tags-file-name)
+					;  (find-file-read-only 
+					;   (concat project-path "/BROWSE"))
   )
 
 (defun c-mode-init ()
   (local-set-key (kbd "RET") 'newline-and-indent)
-;  (define-key global-map "." 'semantic-complete-self-insert)
-;  (define-key global-map "\>" 'semantic-complete-self-insert)
+					;  (define-key global-map "." 'semantic-complete-self-insert)
+					;  (define-key global-map "\>" 'semantic-complete-self-insert)
   (local-set-key (kbd ".") 'semantic-complete-self-insert)
   (local-set-key (kbd ">") 'semantic-complete-self-insert)
   (local-set-key (kbd "C-<tab>") 'semantic-complete-analyze-inline)
@@ -126,7 +125,7 @@
   (semantic-c-add-preprocessor-symbol "Q_CORE_EXPORT" "")
   (semantic-c-add-preprocessor-symbol "Q_OPENGL_EXPORT" "")
   (semantic-c-add-preprocessor-symbol "Q_NETWORK_EXPORT" "")
-)
+  )
 (defun setup-ide ()
   "setup ide functionality"
   (interactive)
@@ -172,7 +171,7 @@
   (global-semantic-show-parser-state-mode 1)
   (semantic-toggle-decoration-style "semantic-tag-boundary" 0)
 
-)
+  )
 
 (defun cut-trailing-slash (fpath)
   (if (or
@@ -181,7 +180,7 @@
       (substring fpath 0 -1)
     fpath
     )
-)
+  )
 
 (defun cut-extension (fpath)
   (if (equal (substring fpath -1 (length fpath)) ".")
@@ -193,8 +192,8 @@
 (defun is-capital-char (string position)
   (if (< position 0)
       (is-capital-char string (+ position (length string)))
-      (equal (upcase (substring string position (+ position 1))) (substring string position (+ position 1)))
-      )
+    (equal (upcase (substring string position (+ position 1))) (substring string position (+ position 1)))
+    )
   )
 
 (defun format-string-as-preprocessor-header-part-loop (pref suf)
@@ -204,18 +203,18 @@
 	  (concat "_" (upcase (substring suf 0 1)))
 	(upcase (substring suf 0 1))
 	
-	  )
+	)
     "")
-)
+  )
 
 (defun format-string-as-preprocessor-header-part (string)
   (let (result)
     (dotimes (number (length string) result)
       (setq result (concat result 
-              (format-string-as-preprocessor-header-part-loop
-               (substring string 0 number) 
-               (substring string number (length string)))
-              )
+			   (format-string-as-preprocessor-header-part-loop
+			    (substring string 0 number) 
+			    (substring string number (length string)))
+			   )
 	    )
       )
     result)
@@ -235,10 +234,10 @@
     (goto-char (point-min))
     (insert 
      (concat "#ifndef " (current-file-preprocessor-header) "\n#define " (current-file-preprocessor-header) "\n\n")
-    )
+     )
     (goto-char (point-max))
     (insert 
      (concat "\n#endif // " (current-file-preprocessor-header) "\n")
      )
     )
-)
+  )

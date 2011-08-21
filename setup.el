@@ -1,7 +1,4 @@
-(setq config-dir "c:/Programming/EmacsConfig/")
-
-;;(load-file (concat config-dir "cedet-1.0/common/cedet.el"))
-;;(global-ede-mode t)
+(setq config-dir (file-name-directory load-file-name))
 
 (load-file (concat config-dir "config.el"))
 
