@@ -26,5 +26,7 @@
 (global-set-key (kbd "<f3>") 'fast-search-next)
 (global-set-key (kbd "S-<f3>") 'fast-search-prev)
 
+(global-set-key (kbd "C-S-f") 'search-in-project)
+
 (global-set-key (kbd "M-.") 'semantic-ia-fast-jump)
 (global-set-key (kbd "C-M-.") 'find-tag)
