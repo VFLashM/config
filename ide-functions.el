@@ -2,10 +2,17 @@
   (replace-regexp-in-string "\\\\" "/" fpath)
   )
 
-(setq project-path "C:/Programming/androidTest/")
+(setq project-path "/home/valera/Programming/androidTest/")
 (setq project-name "RTB")
 (setq file-relative-paths '("./" "Src/" "../"))
-(setq qt-dir (fix-slashes (getenv "QTDIR")))
+(setq qt-dir 
+      (if (file-exists-p "/usr/include/qt4/")
+	  "/usr/include/qt4/"
+	(fix-slashes (getenv "QTDIR"))
+	))
+
+(file-exists-p "/")
+
 (setq system-include-paths '("C:/Program Files (x86)/Microsoft Visual Studio 10.0/VC/include"))
 
 (defun save-and-run ()
@@ -73,7 +80,7 @@
   (interactive)
   (shell-command 
 					;(concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | qmenu"))
-   (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | sed -e s/[-0-9a-zA-Z_.]*$/\\\\0;\\\\0/g | qmenu -s ;"))
+   (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | sed -e s/[-0-9a-zA-Z_.]*$/\\\\0\\;\\\\0/g | qmenu -s \\;"))
   (set-buffer (get-buffer "*Shell Command Output*"))
   (if (> (length (buffer-string)) 0)
       (find-file (concat project-path (buffer-string)))))
