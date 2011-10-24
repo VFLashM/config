@@ -2,14 +2,14 @@
   (replace-regexp-in-string "\\\\" "/" fpath)
   )
 
-(setq project-path "/home/valera/Programming/androidTest/")
+(setq project-path "C:/Programming/AuxProject/GoogleAIChallenge/")
 (setq project-name "RTB")
 (setq file-relative-paths '("./" "Src/" "../"))
 (setq qt-dir 
       (if (file-exists-p "/usr/include/qt4/")
-	  "/usr/include/qt4/"
-	(fix-slashes (getenv "QTDIR"))
-	))
+      "/usr/include/qt4/"
+    (fix-slashes (getenv "QTDIR"))
+    ))
 
 (file-exists-p "/")
 
@@ -42,18 +42,18 @@
   (save-buffer) 
   (compile (concat "scons -D "
                    (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
-                   ".cpp"))
+                   ".cc"))
   (message "compiled!"))
 
 (defun find-corresponding-ext-file (find-ext find-paths)
   "find corresponding header file"
   (set 'fname (concat 
-	       (concat (file-name-directory (buffer-file-name)) (car find-paths)) 
-	       (file-name-nondirectory (concat (file-name-sans-extension (buffer-file-name)) "." find-ext))))
+           (concat (file-name-directory (buffer-file-name)) (car find-paths)) 
+           (file-name-nondirectory (concat (file-name-sans-extension (buffer-file-name)) "." find-ext))))
   (if (file-exists-p fname) 
       (find-file fname)
     (if (> (length find-paths) 1) 
-	(find-corresponding-ext-file find-ext (cdr find-paths))))
+    (find-corresponding-ext-file find-ext (cdr find-paths))))
   )
 
 (defun find-corresponding-file ()
@@ -61,9 +61,9 @@
   (interactive)
   (set 'ext (file-name-extension (buffer-file-name)))
   (if (equal ext "h")
-      (find-corresponding-ext-file "cpp" file-relative-paths)
-    (if (equal ext "cpp")
-	(find-corresponding-ext-file "h" file-relative-paths)))
+      (find-corresponding-ext-file "cc" file-relative-paths)
+    (if (equal ext "cc")
+    (find-corresponding-ext-file "h" file-relative-paths)))
   )
 
 (defun ebrowse-project ()
@@ -71,7 +71,7 @@
   (interactive)
   (if (get-buffer "*Tree*") (kill-buffer (get-buffer "*Tree*")))
   (shell-command
-   (concat "cd " project-path " && find * -iname '*.cpp' -or -iname '*.h' | ebrowse"))
+   (concat "cd " project-path " && find * -iname '*.cc' -or -iname '*.h' | ebrowse"))
   (find-file-read-only 
    (concat project-path "/BROWSE"))
   )
@@ -79,8 +79,8 @@
 (defun find-file-in-project () 
   (interactive)
   (shell-command 
-					;(concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | qmenu"))
-   (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | sed -e s/[-0-9a-zA-Z_.]*$/\\\\0\\;\\\\0/g | qmenu -s \\;"))
+                    ;(concat "cd " project-path " && find . -iname '*.cc' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | qmenu"))
+   (concat "cd " project-path " && find . -iname '*.cc' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | sed -e s/[-0-9a-zA-Z_.]*$/\\\\0\\;\\\\0/g | qmenu -s ;"))
   (set-buffer (get-buffer "*Shell Command Output*"))
   (if (> (length (buffer-string)) 0)
       (find-file (concat project-path (buffer-string)))))
@@ -93,22 +93,22 @@
 (defun etag-project ()
   "browse project classes"
   (interactive)
-					;  (if (get-buffer "*Tree*") (kill-buffer (get-buffer "*Tree*")))
+                    ;  (if (get-buffer "*Tree*") (kill-buffer (get-buffer "*Tree*")))
   (shell-command
-   (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' | etags -"))
+   (concat "cd " project-path " && find . -iname '*.cc' -or -iname '*.h' | etags -"))
   (setq tags-file-name (concat project-path "/TAGS"))
-					;  (tags-revert-without-query)
-					;  (and verify-tags-table-function
-					;       (funcall verify-tags-table-function))
-					;  (visit-tags-table tags-file-name)
-					;  (find-file-read-only 
-					;   (concat project-path "/BROWSE"))
+                    ;  (tags-revert-without-query)
+                    ;  (and verify-tags-table-function
+                    ;       (funcall verify-tags-table-function))
+                    ;  (visit-tags-table tags-file-name)
+                    ;  (find-file-read-only 
+                    ;   (concat project-path "/BROWSE"))
   )
 
 (defun c-mode-init ()
   (local-set-key (kbd "RET") 'newline-and-indent)
-					;  (define-key global-map "." 'semantic-complete-self-insert)
-					;  (define-key global-map "\>" 'semantic-complete-self-insert)
+                    ;  (define-key global-map "." 'semantic-complete-self-insert)
+                    ;  (define-key global-map "\>" 'semantic-complete-self-insert)
   (local-set-key (kbd ".") 'semantic-complete-self-insert)
   (local-set-key (kbd ">") 'semantic-complete-self-insert)
   (local-set-key (kbd "C-<tab>") 'semantic-complete-analyze-inline)
@@ -121,12 +121,12 @@
 
   (if (> (length qt-dir) 0)
       (let ()
-  	(semantic-add-system-include (concat qt-dir "include"))
-  	(semantic-add-system-include (concat qt-dir "include/QtCore"))
-  	(semantic-add-system-include (concat qt-dir "include/QtGui"))
-  	(semantic-add-system-include (concat qt-dir "include/QtOpenGL"))
-	(semantic-add-system-include (concat qt-dir "include/QtNetwork"))
-	)
+    (semantic-add-system-include (concat qt-dir "include"))
+    (semantic-add-system-include (concat qt-dir "include/QtCore"))
+    (semantic-add-system-include (concat qt-dir "include/QtGui"))
+    (semantic-add-system-include (concat qt-dir "include/QtOpenGL"))
+    (semantic-add-system-include (concat qt-dir "include/QtNetwork"))
+    )
     )
   (semantic-c-add-preprocessor-symbol "Q_GUI_EXPORT" "")
   (semantic-c-add-preprocessor-symbol "Q_CORE_EXPORT" "")
@@ -157,23 +157,23 @@
     )
   (if (> (length qt-dir) 0)
       (let ()
-  	(add-to-list 'auto-mode-alist (cons qt-dir 'c++-mode))
+    (add-to-list 'auto-mode-alist (cons qt-dir 'c++-mode))
 
-  	(add-to-list 'ssp-files (concat qt-dir "include/Qt/qconfig.h"))
-  	(add-to-list 'ssp-files (concat qt-dir "include/Qt/qconfig-dist.h"))
-  	(add-to-list 'ssp-files (concat qt-dir "include/Qt/qglobal.h"))
-  	)
+    (add-to-list 'ssp-files (concat qt-dir "include/Qt/qconfig.h"))
+    (add-to-list 'ssp-files (concat qt-dir "include/Qt/qconfig-dist.h"))
+    (add-to-list 'ssp-files (concat qt-dir "include/Qt/qglobal.h"))
+    )
     )
 
   (ede-cpp-root-project project-name
-			:file (concat project-path "SConstruct")
-			:include-path '(
-					"/Src"
-					"/ThirdParty"
-					)
-			:system-include-path '()
-			:spp-files ssp-files
-			:spp-table '())
+            :file (concat project-path "SConstruct")
+            :include-path '(
+                    "/Src"
+                    "/ThirdParty"
+                    )
+            :system-include-path '()
+            :spp-files ssp-files
+            :spp-table '())
 
   (semantic-mode t)
   (global-semantic-decoration-mode 1)
@@ -209,10 +209,10 @@
   (if 
       (and (> (length pref) 0) (> (length suf) 0))
       (if (and (not (is-capital-char pref -1)) (is-capital-char suf 0))
-	  (concat "_" (upcase (substring suf 0 1)))
-	(upcase (substring suf 0 1))
-	
-	)
+      (concat "_" (upcase (substring suf 0 1)))
+    (upcase (substring suf 0 1))
+    
+    )
     "")
   )
 
@@ -220,11 +220,11 @@
   (let (result)
     (dotimes (number (length string) result)
       (setq result (concat result 
-			   (format-string-as-preprocessor-header-part-loop
-			    (substring string 0 number) 
-			    (substring string number (length string)))
-			   )
-	    )
+               (format-string-as-preprocessor-header-part-loop
+                (substring string 0 number) 
+                (substring string number (length string)))
+               )
+        )
       )
     result)
   )
