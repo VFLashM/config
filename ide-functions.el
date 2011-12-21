@@ -109,8 +109,8 @@
   (local-set-key (kbd "RET") 'newline-and-indent)
                     ;  (define-key global-map "." 'semantic-complete-self-insert)
                     ;  (define-key global-map "\>" 'semantic-complete-self-insert)
-  (local-set-key (kbd ".") 'semantic-complete-self-insert)
-  (local-set-key (kbd ">") 'semantic-complete-self-insert)
+  ;(local-set-key (kbd ".") 'semantic-complete-self-insert)
+  ;(local-set-key (kbd ">") 'semantic-complete-self-insert)
   (local-set-key (kbd "C-<tab>") 'semantic-complete-analyze-inline)
 
   (setq tab-width 4)
