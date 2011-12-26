@@ -2,7 +2,7 @@
   (replace-regexp-in-string "\\\\" "/" fpath)
   )
 
-(setq project-path "C:/Programming/AuxProject/GoogleAIChallenge/")
+(setq project-path "~/Programming/androidTest/")
 (setq project-name "RTB")
 (setq file-relative-paths '("./" "Src/" "../"))
 (setq qt-dir 
@@ -42,7 +42,7 @@
   (save-buffer) 
   (compile (concat "scons -D "
                    (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
-                   ".cc"))
+                   ".cpp"))
   (message "compiled!"))
 
 (defun find-corresponding-ext-file (find-ext find-paths)
@@ -61,8 +61,8 @@
   (interactive)
   (set 'ext (file-name-extension (buffer-file-name)))
   (if (equal ext "h")
-      (find-corresponding-ext-file "cc" file-relative-paths)
-    (if (equal ext "cc")
+      (find-corresponding-ext-file "cpp" file-relative-paths)
+    (if (equal ext "cpp")
     (find-corresponding-ext-file "h" file-relative-paths)))
   )
 
@@ -71,7 +71,7 @@
   (interactive)
   (if (get-buffer "*Tree*") (kill-buffer (get-buffer "*Tree*")))
   (shell-command
-   (concat "cd " project-path " && find * -iname '*.cc' -or -iname '*.h' | ebrowse"))
+   (concat "cd " project-path " && find * -iname '*.cpp' -or -iname '*.h' | ebrowse"))
   (find-file-read-only 
    (concat project-path "/BROWSE"))
   )
@@ -79,8 +79,8 @@
 (defun find-file-in-project () 
   (interactive)
   (shell-command 
-                    ;(concat "cd " project-path " && find . -iname '*.cc' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | qmenu"))
-   (concat "cd " project-path " && find . -iname '*.cc' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | sed -e s/[-0-9a-zA-Z_.]*$/\\\\0\\;\\\\0/g | qmenu -s ;"))
+                    ;(concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | qmenu"))
+   (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | sed -e s/[-0-9a-zA-Z_.]*$/\\\\0\\;\\\\0/g | qmenu -s \\;"))
   (set-buffer (get-buffer "*Shell Command Output*"))
   (if (> (length (buffer-string)) 0)
       (find-file (concat project-path (buffer-string)))))
@@ -95,7 +95,7 @@
   (interactive)
                     ;  (if (get-buffer "*Tree*") (kill-buffer (get-buffer "*Tree*")))
   (shell-command
-   (concat "cd " project-path " && find . -iname '*.cc' -or -iname '*.h' | etags -"))
+   (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' | etags -"))
   (setq tags-file-name (concat project-path "/TAGS"))
                     ;  (tags-revert-without-query)
                     ;  (and verify-tags-table-function
