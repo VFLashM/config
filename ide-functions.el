@@ -14,9 +14,14 @@
     ))
 (setq ide-setted-up nil)
 
-(file-exists-p "/")
-
-(setq system-include-paths '("C:/Program Files (x86)/Microsoft Visual Studio 10.0/VC/include"))
+(defun find-tag-under-cursor ()
+  "finds tag under cursor"
+  (interactive)
+  (find-tag 
+   (funcall (or find-tag-default-function
+		(get major-mode 'find-tag-default-function)
+		'find-tag-default)))
+  )
 
 (defun save-and-run ()
   "save, make and run"
@@ -97,16 +102,9 @@
 (defun etag-project ()
   "browse project classes"
   (interactive)
-                    ;  (if (get-buffer "*Tree*") (kill-buffer (get-buffer "*Tree*")))
   (shell-command
    (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' | etags -"))
   (setq tags-file-name (concat project-path "/TAGS"))
-                    ;  (tags-revert-without-query)
-                    ;  (and verify-tags-table-function
-                    ;       (funcall verify-tags-table-function))
-                    ;  (visit-tags-table tags-file-name)
-                    ;  (find-file-read-only 
-                    ;   (concat project-path "/BROWSE"))
   )
 
 (defun c-mode-init ()
@@ -115,14 +113,9 @@
 
   (setq ac-sources '(ac-source-clang))
 
-;  (setq ac-auto-start nil)
-;  (setq ac-expand-on-auto-complete nil)
-;  (setq ac-quick-help-delay 0.3)  
-
   (setq ac-auto-start nil)
   (define-key ac-mode-map (kbd "<C-tab>") 'auto-complete)
   (auto-complete-mode)
-;  (local-set-key (kbd "<C-tab>") 'ac-complete-clang)
 )
 
 (defun check-setup-ide ()
@@ -131,12 +124,10 @@
       (setup-ide)
     )
   (setq ide-setted-up t)
+  (etag-project)
   )
 
 (defun setup-ide ()
-
-  ;(etag-project)
-
   (require 'auto-complete)
   (require 'auto-complete-clang)
   (if (not ac-clang-executable)
@@ -153,21 +144,13 @@
 
   (add-to-list 'ac-clang-flags "-DTARGET_PLATFORM_WINDOWS")
   (add-to-list 'ac-clang-flags "-DTARGET_PLATFORM_WINDOWS_MINGW")
-  ;(add-to-list 'ac-clang-flags "-Dint64_t=long")
-  ;(add-to-list 'ac-clang-flags "-Duint64_t=unsigned long")
   (add-to-list 'ac-clang-flags "-D_MSC_VER")
-  ;(add-to-list 'ac-clang-flags "-D_W64=")
-  ;(add-to-list 'ac-clang-flags "-D_WCHAR_T_DEFINED")
-  ;(add-to-list 'ac-clang-flags "-D__int64=long")
-  ;(add-to-list 'ac-clang-flags "-IC:/Program Files/Microsoft Visual Studio 10.0/VC/include")
-  ;(add-to-list 'ac-clang-flags "-IC:/Program Files/Microsoft SDKs/Windows/v7.0A/Include")
   (add-to-list 'ac-clang-flags "-D__MSVCRT__")
   (add-to-list 'ac-clang-flags "-IC:/MinGW/include")
   (add-to-list 'ac-clang-flags "-IC:/MinGW/lib/gcc/mingw32/4.5.2/include")
   (add-to-list 'ac-clang-flags "-IC:/MinGW/lib/gcc/mingw32/4.5.2/include/c++")
   (add-to-list 'ac-clang-flags "-IC:/MinGW/lib/gcc/mingw32/4.5.2/include/c++/mingw32")
  
-
   (add-hook 'c-mode-hook 'c-mode-init)
   (add-hook 'c++-mode-hook 'c-mode-init)
   )

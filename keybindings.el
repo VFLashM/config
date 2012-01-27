@@ -28,5 +28,7 @@
 
 (global-set-key (kbd "C-S-f") 'search-in-project)
 
-(global-set-key (kbd "M-.") 'semantic-ia-fast-jump)
-(global-set-key (kbd "C-M-.") 'find-tag)
+(global-set-key (kbd "M-.") 'find-tag)
+(global-set-key (kbd "<C-return>") 'find-tag-under-cursor)
+;(global-set-key (kbd "M-.") 'semantic-ia-fast-jump)
+;(global-set-key (kbd "C-M-.") 'find-tag)
