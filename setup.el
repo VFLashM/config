@@ -9,3 +9,4 @@
 (load-file (concat config-dir "ide-search-in-project.el"))
 
 (load-file (concat config-dir "keybindings.el"))
+(load-file (concat config-dir "auto-complete-clang.el"))

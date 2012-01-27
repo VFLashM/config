@@ -108,8 +108,16 @@
 (defun c-mode-init ()
   (local-set-key (kbd "RET") 'newline-and-indent)
   (setq tab-width 4)
-  (setq ac-sources '(ac-source-clang))
-  (auto-complete-mode))
+
+  (require 'auto-complete-clang)
+  (setq ac-sources '())
+  (setq ac-auto-start nil)
+  (setq ac-expand-on-auto-complete nil)
+  (setq ac-quick-help-delay 0.3)
+  (local-set-key (kbd "<C-tab>") 'ac-complete-clang)
+
+  (auto-complete-mode)
+)
 
 (defun setup-ide ()
   "setup ide functionality"
@@ -117,8 +125,6 @@
 
   (etag-project)
   
-  (require 'auto-complete-clang)
-
   (add-hook 'c-mode-hook 'c-mode-init)
   (add-hook 'c++-mode-hook 'c-mode-init)
   )
