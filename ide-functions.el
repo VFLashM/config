@@ -107,79 +107,20 @@
 
 (defun c-mode-init ()
   (local-set-key (kbd "RET") 'newline-and-indent)
-                    ;  (define-key global-map "." 'semantic-complete-self-insert)
-                    ;  (define-key global-map "\>" 'semantic-complete-self-insert)
-  ;(local-set-key (kbd ".") 'semantic-complete-self-insert)
-  ;(local-set-key (kbd ">") 'semantic-complete-self-insert)
-  (local-set-key (kbd "C-<tab>") 'semantic-complete-analyze-inline)
-
   (setq tab-width 4)
+  (setq ac-sources '(ac-source-clang))
+  (auto-complete-mode))
 
-  (dolist (path system-include-paths)
-    (semantic-add-system-include path)
-    )
-
-  (if (> (length qt-dir) 0)
-      (let ()
-    (semantic-add-system-include (concat qt-dir "include"))
-    (semantic-add-system-include (concat qt-dir "include/QtCore"))
-    (semantic-add-system-include (concat qt-dir "include/QtGui"))
-    (semantic-add-system-include (concat qt-dir "include/QtOpenGL"))
-    (semantic-add-system-include (concat qt-dir "include/QtNetwork"))
-    )
-    )
-  (semantic-c-add-preprocessor-symbol "Q_GUI_EXPORT" "")
-  (semantic-c-add-preprocessor-symbol "Q_CORE_EXPORT" "")
-  (semantic-c-add-preprocessor-symbol "Q_OPENGL_EXPORT" "")
-  (semantic-c-add-preprocessor-symbol "Q_NETWORK_EXPORT" "")
-  (semantic-c-add-preprocessor-symbol "PUGIXML_CLASS" "class")
-  (semantic-c-add-preprocessor-symbol "PUGIXML_FUNCTION" "")
-  )
 (defun setup-ide ()
   "setup ide functionality"
   (interactive)
 
-  ;; (require 'semantic/bovine/c)
-  ;; (require 'semantic/bovine/gcc)
-  ;; (require 'semantic/decorate/include)
-  ;; (require 'semantic/decorate/mode)
-
   (etag-project)
+  
+  (require 'auto-complete-clang)
+
   (add-hook 'c-mode-hook 'c-mode-init)
   (add-hook 'c++-mode-hook 'c-mode-init)
-  
-
-  (global-ede-mode t)
-
-  (setq ssp-files '())
-  (dolist (path system-include-paths)
-    (add-to-list 'auto-mode-alist (cons path 'c++-mode))
-    )
-  (if (> (length qt-dir) 0)
-      (let ()
-    (add-to-list 'auto-mode-alist (cons qt-dir 'c++-mode))
-
-    (add-to-list 'ssp-files (concat qt-dir "include/Qt/qconfig.h"))
-    (add-to-list 'ssp-files (concat qt-dir "include/Qt/qconfig-dist.h"))
-    (add-to-list 'ssp-files (concat qt-dir "include/Qt/qglobal.h"))
-    )
-    )
-
-  (ede-cpp-root-project project-name
-            :file (concat project-path "SConstruct")
-            :include-path '(
-                    "/Src"
-                    "/ThirdParty"
-                    )
-            :system-include-path '()
-            :spp-files ssp-files
-            :spp-table '())
-
-  (semantic-mode t)
-  (global-semantic-decoration-mode 1)
-  (global-semantic-show-parser-state-mode 1)
-  (semantic-toggle-decoration-style "semantic-tag-boundary" 0)
-
   )
 
 (defun cut-trailing-slash (fpath)
