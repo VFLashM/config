@@ -2,7 +2,9 @@
   (replace-regexp-in-string "\\\\" "/" fpath)
   )
 
-(setq project-path "~/Programming/androidTest/")
+;(setq project-path "~/Programming/androidTest/")
+(setq project-path "C:/Programming/AndroidTest/")
+
 (setq project-name "RTB")
 (setq file-relative-paths '("./" "Src/" "../"))
 (setq qt-dir 
@@ -10,6 +12,7 @@
       "/usr/include/qt4/"
     (fix-slashes (getenv "QTDIR"))
     ))
+(setq ide-setted-up nil)
 
 (file-exists-p "/")
 
@@ -78,6 +81,7 @@
 
 (defun find-file-in-project () 
   (interactive)
+  (check-setup-ide)
   (shell-command 
                     ;(concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | qmenu"))
    (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | sed -e s/[-0-9a-zA-Z_.]*$/\\\\0\\;\\\\0/g | qmenu -s \\;"))
@@ -109,22 +113,61 @@
   (local-set-key (kbd "RET") 'newline-and-indent)
   (setq tab-width 4)
 
-  (require 'auto-complete-clang)
-  (setq ac-sources '())
-  (setq ac-auto-start nil)
-  (setq ac-expand-on-auto-complete nil)
-  (setq ac-quick-help-delay 0.3)
-  (local-set-key (kbd "<C-tab>") 'ac-complete-clang)
+  (setq ac-sources '(ac-source-clang))
 
+;  (setq ac-auto-start nil)
+;  (setq ac-expand-on-auto-complete nil)
+;  (setq ac-quick-help-delay 0.3)  
+
+  (setq ac-auto-start nil)
+  (define-key ac-mode-map (kbd "<C-tab>") 'auto-complete)
   (auto-complete-mode)
+;  (local-set-key (kbd "<C-tab>") 'ac-complete-clang)
 )
 
-(defun setup-ide ()
-  "setup ide functionality"
-  (interactive)
+(defun check-setup-ide ()
+  (if 
+      (not ide-setted-up)
+      (setup-ide)
+    )
+  (setq ide-setted-up t)
+  )
 
-  (etag-project)
-  
+(defun setup-ide ()
+
+  ;(etag-project)
+
+  (require 'auto-complete)
+  (require 'auto-complete-clang)
+  (if (not ac-clang-executable)
+      (setq ac-clang-executable "C:/Programming/llvm/build/bin/RelWithDebInfo/clang.exe")
+  )
+  (add-to-list 'ac-clang-flags (concat "-I" project-path "Src"))
+  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty"))
+  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty/glew-1.7.0/include"))
+  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty/libpng-1.5.4"))
+  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty/zlib-1.2.5"))
+  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty/openal-1.1/include"))
+  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty/freealut-1.1.0-src/include"))
+  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty/Tremor"))
+
+  (add-to-list 'ac-clang-flags "-DTARGET_PLATFORM_WINDOWS")
+  (add-to-list 'ac-clang-flags "-DTARGET_PLATFORM_WINDOWS_MINGW")
+  ;(add-to-list 'ac-clang-flags "-Dint64_t=long")
+  ;(add-to-list 'ac-clang-flags "-Duint64_t=unsigned long")
+  (add-to-list 'ac-clang-flags "-D_MSC_VER")
+  ;(add-to-list 'ac-clang-flags "-D_W64=")
+  ;(add-to-list 'ac-clang-flags "-D_WCHAR_T_DEFINED")
+  ;(add-to-list 'ac-clang-flags "-D__int64=long")
+  ;(add-to-list 'ac-clang-flags "-IC:/Program Files/Microsoft Visual Studio 10.0/VC/include")
+  ;(add-to-list 'ac-clang-flags "-IC:/Program Files/Microsoft SDKs/Windows/v7.0A/Include")
+  (add-to-list 'ac-clang-flags "-D__MSVCRT__")
+  (add-to-list 'ac-clang-flags "-IC:/MinGW/include")
+  (add-to-list 'ac-clang-flags "-IC:/MinGW/lib/gcc/mingw32/4.5.2/include")
+  (add-to-list 'ac-clang-flags "-IC:/MinGW/lib/gcc/mingw32/4.5.2/include/c++")
+  (add-to-list 'ac-clang-flags "-IC:/MinGW/lib/gcc/mingw32/4.5.2/include/c++/mingw32")
+ 
+
   (add-hook 'c-mode-hook 'c-mode-init)
   (add-hook 'c++-mode-hook 'c-mode-init)
   )

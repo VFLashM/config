@@ -1,5 +1,5 @@
 (global-set-key (kbd "\e\e e") 'ecb-activate) ;; ecb activation
-(global-set-key (kbd "\e\e l") 'setup-ide) ;; ecb activation
+(global-set-key (kbd "\e\e l") 'check-setup-ide) ;; ecb activation
 
 (global-set-key (kbd "<f5>") 'save-and-run)
 (global-set-key (kbd "C-<f5>") 'save-and-test)
