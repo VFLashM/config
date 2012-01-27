@@ -30,7 +30,7 @@
 
 (provide 'auto-complete-clang)
 (require 'auto-complete)
-
+(require 'cl)
 
 (defcustom ac-clang-executable
   (executable-find "clang")
