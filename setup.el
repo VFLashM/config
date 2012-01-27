@@ -1,5 +1,8 @@
 (setq config-dir (file-name-directory load-file-name))
 
+(add-to-list 'load-path config-dir)
+(add-to-list 'load-path (concat config-dir "ac"))
+
 (load-file (concat config-dir "config.el"))
 
 (load-file (concat config-dir "base-edit-functions.el"))
@@ -9,4 +12,3 @@
 (load-file (concat config-dir "ide-search-in-project.el"))
 
 (load-file (concat config-dir "keybindings.el"))
-(load-file (concat config-dir "auto-complete-clang.el"))
