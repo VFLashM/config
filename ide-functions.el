@@ -126,10 +126,10 @@
       (setup-ide)
     )
   (setq ide-setted-up t)
-  (etag-project)
   )
 
 (defun setup-ide ()
+  (etag-project)
   (require 'auto-complete)
   (require 'auto-complete-clang)
   (if (not ac-clang-executable)
