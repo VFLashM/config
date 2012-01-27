@@ -119,6 +119,8 @@
 )
 
 (defun check-setup-ide ()
+  "setup ide if not setted up"
+  (interactive)
   (if 
       (not ide-setted-up)
       (setup-ide)
