@@ -19,7 +19,15 @@
 (global-set-key (kbd "C-c u") 'uncomment-region)
 (global-set-key (kbd "C-c v") 'svnbrowse-project)
 
-(global-set-key (kbd "C-y") 'yank-replace-region)
+(global-set-key [home] 'smart-beginning-of-line)
+(global-set-key (kbd "C-a") 'smart-beginning-of-line)
+(global-set-key [end] 'smart-end-of-line)
+(global-set-key (kbd "C-e") 'smart-end-of-line)
+
+(global-set-key (kbd "M-f") 'smart-forward-to-word)
+(global-set-key (kbd "M-b") 'smart-backward-to-word)
+(global-set-key [C-right] 'smart-forward-to-word)
+(global-set-key [C-left] 'smart-backward-to-word)
 
 (global-set-key (kbd "C-<f3>") 'fast-search-forward)
 (global-set-key (kbd "C-S-<f3>") 'fast-search-backward)

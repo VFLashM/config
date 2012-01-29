@@ -118,7 +118,9 @@
   (define-key ac-mode-map (kbd "<C-tab>") 'auto-complete)
   (auto-complete-mode)
   (yas/minor-mode)
-)
+
+  (delete-selection-mode 1)
+  )
 
 (defun check-setup-ide ()
   "setup ide if not setted up"
