@@ -70,3 +70,44 @@ If point was already at that position, move point to beginning of line."
       )
     )
 )
+
+(defun select-first-file-buffer (list)
+  (if list
+      (progn
+	(if (buffer-file-name (car list))
+	    (car list)
+	  (select-first-file-buffer (cdr list))
+	  )
+	)
+    )
+  )
+
+(defun shift-list (list)
+  (append (cdr list) (cons (car list) '()))
+  )
+
+(defun select-next-file-buffer (list)
+  (if (equal (current-buffer) (car list))
+      (select-first-file-buffer 
+        (shift-list list)
+       )
+    (select-next-file-buffer (shift-list list))
+    )
+  )
+
+(defun set-buffer-if-not-nil (buffer)
+  (if buffer 
+      (set-window-buffer (selected-window) (buffer-name buffer)))
+  )
+
+(defun cycle-buffers-next ()
+  "switching to the next buffer, burying previous one"
+  (interactive)
+  (set-buffer-if-not-nil (select-next-file-buffer (buffer-list)))
+  )
+
+(defun cycle-buffers-prev()
+  "switching to the prev buffer, burying previous one"
+  (interactive)
+  (set-buffer-if-not-nil (select-next-file-buffer (reverse (buffer-list))))
+  )
