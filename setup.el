@@ -2,6 +2,7 @@
 
 (add-to-list 'load-path config-dir)
 (add-to-list 'load-path (concat config-dir "ac"))
+(add-to-list 'load-path (concat config-dir "yasnippet"))
 
 (load-file (concat config-dir "config.el"))
 

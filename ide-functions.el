@@ -116,6 +116,7 @@
   (setq ac-auto-start nil)
   (define-key ac-mode-map (kbd "<C-tab>") 'auto-complete)
   (auto-complete-mode)
+  (yas/minor-mode)
 )
 
 (defun check-setup-ide ()
@@ -130,6 +131,10 @@
 
 (defun setup-ide ()
   (etag-project)
+  (require 'yasnippet)
+  (setq yas/root-directory (concat config-dir "yasnippet/snippets"))
+  (yas/load-directory yas/root-directory)
+
   (require 'auto-complete)
   (require 'auto-complete-clang)
   (if (not ac-clang-executable)
