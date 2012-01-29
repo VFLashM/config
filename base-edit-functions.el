@@ -1,4 +1,4 @@
-(require 'misc) ; for forward-to-word backward-to-word
+;(require 'misc) ; for forward-to-word backward-to-word
 
 ;; (defun yank-replace-region ()
 ;;   "Yank and repalce current region"
@@ -31,7 +31,7 @@ If point was already at that position, move point to beginning of line."
 
 (defun smart-forward-to-word ()
   "like forward to word, but does stop at the end of the line"
-  (interactive)
+  (interactive "^")
   (if (= (point) (line-end-position))
       (progn
 	(next-line)
@@ -52,7 +52,7 @@ If point was already at that position, move point to beginning of line."
 
 (defun smart-backward-to-word ()
   "like forward to word, but does stop at the beginning of the line"
-  (interactive)
+  (interactive "^")
   (if (= (point) (line-beginning-position))
       (progn
 	(previous-line)
