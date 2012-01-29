@@ -26,34 +26,47 @@ If point was already at that position, move point to beginning of line."
          (end-of-line))
   )
 
+(setq jump-forward-regexp     "\\([A-Z_][^A-Z_ \t]\\|[ \t][^ \t]\\|^\\)")
+(setq jump-forward-regexp-ne  "\\([A-Z_][^A-Z_ \t]\\|[ \t][^ \t]\\)")
+(setq jump-backward-regexp    "\\([^A-Z_ \t][A-Z_]\\|[ \t][^ \t]\\|^\\)")
+(setq jump-backward-regexp-ne "\\([^A-Z_ \t][A-Z_]\\|[ \t][^ \t]\\)")
+
 (defun smart-forward-to-word ()
   "like forward to word, but does stop at the end of the line"
   (interactive)
-  (let ((p (point))
-	(line (what-line)))
-	
-	(forward-to-word 1)
-	(if (not (equal line (what-line)))
-	    (progn 
-	      (goto-char p)
-	      (smart-end-of-line)
-	      )
-	  )
-	)
+  (let ((pos (point)))
+    (search-forward-regexp jump-forward-regexp)
+    (if (= pos (point))
+	(search-forward-regexp jump-forward-regexp-ne)
+	;; (progn 
+	;;   (forward-char)
+	;;   (search-forward-regexp jump-forward-regexp))
+      )
+    (backward-char)
+    (if (= pos (point))
+	(progn
+	  (next-line)
+	  (beginning-of-line))
+      ) 
+    )
 )
 
 (defun smart-backward-to-word ()
   "like forward to word, but does stop at the beginning of the line"
   (interactive)
-  (let ((p (point))
-	(line (what-line)))
-	
-	(backward-word 1)
-	(if (not (equal line (what-line)))
-	    (progn 
-	      (goto-char p)
-	      (smart-beginning-of-line)
-	      )
-	  )
-	)
+  (let ((pos (point)))
+    (search-backward-regexp jump-backward-regexp)
+    (if (= pos (point))
+	(search-backward-regexp jump-backward-regexp-ne)
+    	;; (progn 
+    	;;   (backward-char)
+    	;;   (search-backward-regexp jump-backward-regexp))
+      )
+    (forward-char)
+    (if (= pos (point))
+	(progn 
+	  (previous-line)
+	  (end-of-line))
+      )
+    )
 )
