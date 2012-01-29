@@ -1,5 +1,26 @@
 (setq last-search-string "")
 
+(defun word-under-cursor-range ()
+  (let ((pos (point))
+	min
+	max)
+    (search-backward-regexp "[^A-Za-z_]")
+    (setq min (+ (point) 1))
+    (goto-char pos)
+    (search-forward-regexp "[^A-Za-z_]")
+    (setq max (- (point) 1))
+    (goto-char pos)
+    (cons min (cons max '()))
+  )
+  )
+
+(defun fast-search-range ()
+  (if mark-active
+      (cons (region-beginning) (cons (region-end) '()))
+    (word-under-cursor-range)
+  )
+  )
+
 (defun init-fast-search ()
   "init fast search"
   (if mark-active
