@@ -1,0 +1,4 @@
+#name : ale assertLessOrEqual(..., ...)
+# --
+assertLessOrEqual(${1:}, ${2:});
+$0
