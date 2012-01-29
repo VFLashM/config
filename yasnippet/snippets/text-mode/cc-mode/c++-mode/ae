@@ -1,0 +1,4 @@
+#name : ae assertEquals(..., ...)
+# --
+assertEquals(${1:}, ${2:});
+$0
