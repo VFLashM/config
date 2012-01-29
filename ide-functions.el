@@ -90,7 +90,7 @@
   (check-setup-ide)
   (shell-command 
                     ;(concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' | qmenu"))
-   (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' -or -iname '*.xml' | sed -e s/[-0-9a-zA-Z_.]*$/\\\\0\\:\\\\0/g | qmenu -s :"))
+   (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' -or -iname '*.lua' -or -iname '*.pkg' -or -iname '*.xml' | sed -e s/[-0-9a-zA-Z_.]*$/\\\\0\\:\\\\0/g | qmenu -s : -c " project-path ".qmenu.cache"))
   (set-buffer (get-buffer "*Shell Command Output*"))
   (if (> (length (buffer-string)) 0)
       (find-file (concat project-path (buffer-string)))))
