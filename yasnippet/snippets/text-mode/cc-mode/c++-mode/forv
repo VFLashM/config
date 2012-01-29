@@ -1,0 +1,5 @@
+#name : forv (...; ...; ...) { ... }
+# --
+for (std::vector<${1:Type}>::iterator it = ${2:v}.begin(); it != $2.end(); ++it) {
+    $0
+}
