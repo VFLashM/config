@@ -1,6 +1,6 @@
 (setq last-search-string "")
 
-(defun word-under-cursor-range ()
+(defun word-under-cursor ()
   (let ((pos (point))
 	min
 	max)
@@ -10,25 +10,24 @@
     (search-forward-regexp "[^A-Za-z_]")
     (setq max (- (point) 1))
     (goto-char pos)
-    (cons min (cons max '()))
-  )
+    (buffer-substring min max)
+    )
   )
 
-(defun fast-search-range ()
-  (if mark-active
-      (cons (region-beginning) (cons (region-end) '()))
-    (word-under-cursor-range)
-  )
+(defun mark-search-string ()
+  (push-mark (- (point) (length last-search-string)))
+  (activate-mark)
+  (setq transient-mark-mode (only . t))
   )
 
 (defun init-fast-search ()
   "init fast search"
   (if mark-active
       (setq last-search-string (buffer-substring (region-beginning) (region-end)))
-    (setq last-search-string "")
-  )
+    (setq last-search-string (word-under-cursor))
+    )
   (deactivate-mark)
-)
+  )
 
 (defun fast-search-forward ()
   "init fast search forward"
@@ -47,11 +46,10 @@
 (defun fast-search-next ()
   "do fast search forward"
   (interactive)
-  (deactivate-mark)
   (if (> (length last-search-string) 0)
-      (let ()
+      (progn
 	(search-forward last-search-string nil t)
-	(push-mark (- (point) (length last-search-string)))
+	(mark-search-string)
 	)
     )
 )
@@ -61,10 +59,16 @@
   (interactive)
   (deactivate-mark)
   (if (> (length last-search-string) 0)
-      (let ()
-	(search-backward last-search-string nil t)
-	(push-mark (+ (point) (length last-search-string)))
-	;(transient-mark-mode t)
+      (progn
+	(backward-char)
+	(let ((pos (point)))
+	  (search-backward last-search-string nil t)
+	  (if (= pos (point))
+	      (forward-char)
+	      (forward-char (length last-search-string))
+	      )
+	  )
+	(mark-search-string)
 	)
     )
 )
