@@ -26,8 +26,8 @@ If point was already at that position, move point to beginning of line."
          (end-of-line))
   )
 
-(setq jump-forward-regexp     "\\([A-Z_][^A-Z_ \t]\\|[ \t][^ \t]\\)")
-(setq jump-backward-regexp    "\\([^A-Z_ \t][A-Z_]\\|[ \t][^ \t]\\)")
+(setq jump-forward-regexp     "\\([A-Z0-9_][^A-Z0-9_ \t]\\|[ \t][^ \t]\\)")
+(setq jump-backward-regexp    "\\([^A-Z0-9_ \t][A-Z0-9_]\\|[ \t][^ \t]\\)")
 
 (defun smart-forward-to-word ()
   "like forward to word, but does stop at the end of the line"
