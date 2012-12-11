@@ -43,3 +43,5 @@
 ;(autoload 'uim-mode "uim" nil t)
 ;(setq uim-default-im-engine "anthy")
 ;(global-set-key "\C-o" 'uim-mode)
+
+(setq w32-get-true-file-attributes nil)
