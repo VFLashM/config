@@ -111,3 +111,26 @@ If point was already at that position, move point to beginning of line."
   (interactive)
   (set-buffer-if-not-nil (select-next-file-buffer (reverse (buffer-list))))
   )
+
+(defun smart-delete-word-backward ()
+  ""
+  (interactive)
+  (let (
+	(pos (point))
+	)
+    (smart-backward-to-word)
+    (delete-region pos (point))
+    )
+  )
+  
+(defun smart-delete-word-forward ()
+  ""
+  (interactive)
+  (let (
+	(pos (point))
+	)
+    (smart-forward-to-word)
+    (delete-region pos (point))
+    )
+  )
+  
