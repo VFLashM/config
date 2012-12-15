@@ -17,15 +17,15 @@
       (current-line "#282a2e")
       (selection "#373b41")
       (foreground "#c5c8c6")
-      (comment "#969896")
+      (comment "#7E7F7E")
       (cursor "#aeafad")
-      (red "#cc6666")
-      (orange "#de935f")
-      (yellow "#f0c674")
-      (green "#b5bd68")
-      (aqua "#8abeb7")
-      (blue "#81a2be")
-      (purple "#b294bb"))
+      (red "#CC3D3D")
+      (orange "#D88A56")
+      (yellow "#EAD05D")
+      (green "#95BF4C")
+      (aqua "#5EBCAE")
+      (blue "#5D91BA")
+      (purple "#A56EB7"))
 
   (custom-theme-set-faces
    'tomorrow-night
