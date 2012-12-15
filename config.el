@@ -21,6 +21,7 @@
 (setq scroll-conservatively 50)               ;; smooth scroll
 (setq scroll-perspective-screen-position 't)
 
+(set-face-attribute 'default nil :font "DejaVu Sans Mono-10")
 ;;(set-frame-font "-xos4-terminus-medium-r-normal--20-200-72-72-c-100-iso10646-1")
 ;;(set-frame-font "-*-terminus-medium-r-normal--20-*-*-*-c-*-*-*")
 
