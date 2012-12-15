@@ -4,7 +4,7 @@
 (add-to-list 'load-path (concat config-dir "ac"))
 (add-to-list 'load-path (concat config-dir "yasnippet"))
 
-(load-file (concat config-dir "tomorrow-night-theme.el"))
+(load-file (concat config-dir "tomorrow-night-colorful-theme.el"))
 (load-file (concat config-dir "config.el"))
 
 (load-file (concat config-dir "base-edit-functions.el"))
