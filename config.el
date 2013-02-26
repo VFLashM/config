@@ -4,8 +4,10 @@
 (set-keyboard-coding-system 'utf-8)
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
-(setq tab-width 4)
-(setq c-basic-offset 4)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width global-tab-width)
+(setq lua-indent-level global-tab-width)
+(setq c-basic-offset global-tab-width)
 
 (show-paren-mode t)
 (define-coding-system-alias 'windows-1251 'cp1251)

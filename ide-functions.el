@@ -8,7 +8,7 @@
   )
 
 (setq file-relative-paths '("./" "Src/" "../"))
-(setq qt-dir 
+(setq qt-dir
       (if (file-exists-p "/usr/include/qt4/")
       "/usr/include/qt4/"
       (if (getenv "QTDIR")
@@ -21,7 +21,7 @@
 (defun find-tag-under-cursor ()
   "finds tag under cursor"
   (interactive)
-  (find-tag 
+  (find-tag
    (funcall (or find-tag-default-function
 		(get major-mode 'find-tag-default-function)
 		'find-tag-default)))
@@ -132,8 +132,7 @@
 
 (defun c-mode-init ()
   (local-set-key (kbd "RET") 'newline-and-indent)
-  (setq tab-width 4)
-
+  
   (setq ac-sources '(ac-source-clang))
 
   (setq ac-auto-start nil)
@@ -155,7 +154,7 @@
   )
 
 (defun setup-ide ()
-  (etag-project)
+  ;(etag-project)
   (require 'yasnippet)
   (setq yas/root-directory (concat config-dir "yasnippet/snippets"))
   (yas/load-directory yas/root-directory)
