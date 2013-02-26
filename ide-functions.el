@@ -1,18 +1,20 @@
+
+
+(setq project-path (car (car projects)))
+(setq project-name (car (cdr (car projects))))
+
 (defun fix-slashes (fpath)
   (replace-regexp-in-string "\\\\" "/" fpath)
   )
 
-(if (equal system-type 'windows-nt)
-    (setq project-path "C:/Programming/AndroidTest/")
-  (setq project-path "~/Programming/androidTest/"))
-;(setq project-path "C:/Programming/AuxProject/QMenu/")
-
-(setq project-name "RTB")
 (setq file-relative-paths '("./" "Src/" "../"))
 (setq qt-dir 
       (if (file-exists-p "/usr/include/qt4/")
       "/usr/include/qt4/"
-    (fix-slashes (getenv "QTDIR"))
+      (if (getenv "QTDIR")
+	  (fix-slashes (getenv "QTDIR"))
+	""
+	)
     ))
 (setq ide-setted-up nil)
 
@@ -86,14 +88,34 @@
    (concat project-path "/BROWSE"))
   )
 
+(defun change-project ()
+  (interactive)
+  (check-setup-ide)
+
+  (shell-command 
+   (concat "echo " (mapconcat 'identity (mapcar (lambda (x) (concat (car x) "?" (car (cdr x)) "!" (car (cdr x)))) projects) " ") " | qmenu -s !")
+   )
+
+  (set-buffer (get-buffer "*Shell Command Output*"))
+  (if (> (length (buffer-string)) 0)
+      (let (
+	    (project-pair (split-string (buffer-string) "?"))
+	    )
+	(setq project-path (car project-pair))
+	(setq project-name (car (cdr project-pair)))
+	)
+    )
+  )
+
 (defun find-file-in-project () 
   (interactive)
   (check-setup-ide)
-  (shell-command 
-   (concat "chooseFile " project-path " " project-path ".qmenu.cache"))
+  (shell-command
+   (concat "chooseFile " project-path " " project-path ".qmenu.cache " project-name))
   (set-buffer (get-buffer "*Shell Command Output*"))
   (if (> (length (buffer-string)) 0)
-      (find-file (buffer-string))))
+      (find-file (buffer-string)))
+  )
 
 (defun svnbrowse-project ()
   "browse svn tree of project"
