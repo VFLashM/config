@@ -31,21 +31,21 @@
   "save, make and run"
   (interactive)
   (save-buffer)
-  (compile "scons -D run")
+  (compile "scons -D -j 4 run")
   (message "builded!"))
 
 (defun save-and-make ()
   "save and make"
   (interactive)
   (save-buffer)
-  (compile "scons -D")
+  (compile "scons -D -j 4 ")
   (message "builded!"))
 
 (defun save-and-test ()
   "save, make and test"
   (interactive)
   (save-buffer)
-  (compile "scons -D test")
+  (compile "scons -D -j 4 test")
   (message "tested!"))
 
 (defun save-and-compile ()
