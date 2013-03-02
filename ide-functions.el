@@ -1,5 +1,3 @@
-
-
 (setq project-path (car (car projects)))
 (setq project-name (car (cdr (car projects))))
 
@@ -10,12 +8,12 @@
 (setq file-relative-paths '("./" "Src/" "../"))
 (setq qt-dir
       (if (file-exists-p "/usr/include/qt4/")
-      "/usr/include/qt4/"
-      (if (getenv "QTDIR")
-	  (fix-slashes (getenv "QTDIR"))
-	""
-	)
-    ))
+          "/usr/include/qt4/"
+        (if (getenv "QTDIR")
+            (fix-slashes (getenv "QTDIR"))
+          ""
+          )
+        ))
 (setq ide-setted-up nil)
 
 (defun find-tag-under-cursor ()
@@ -93,7 +91,7 @@
   (check-setup-ide)
 
   (shell-command 
-   (concat "echo " (mapconcat 'identity (mapcar (lambda (x) (concat (car x) "?" (car (cdr x)) "!" (car (cdr x)))) projects) " ") " | qmenu -s !")
+   (concat "echo " (mapconcat 'identity (mapcar (lambda (x) (concat (car (cdr x)) " " (car x) "?" (car (cdr x)) " " (car x))) projects) " ") " | qmenu -i 3" )
    )
 
   (set-buffer (get-buffer "*Shell Command Output*"))
