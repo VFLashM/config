@@ -20,11 +20,34 @@
 (global-set-key (kbd "C-c u") 'uncomment-region)
 (global-set-key (kbd "C-c v") 'svnbrowse-project)
 
+; jkli keys
+(define-key input-decode-map (kbd "C-i") (kbd "H-i"))
+(define-key input-decode-map (kbd "C-M-i") (kbd "H-M-i"))
+(global-set-key (kbd "M-j") 'backward-char)
+(global-set-key (kbd "M-l") 'forward-char)
+(global-set-key (kbd "M-k") 'next-line)
+(global-set-key (kbd "M-i") 'previous-line)
+(global-set-key (kbd "C-j") 'smart-backward-to-word)
+(global-set-key (kbd "C-l") 'smart-forward-to-word);
+(global-set-key (kbd "C-k") 'next-line)
+(global-set-key (kbd "H-i") 'previous-line)
+(global-set-key (kbd "C-M-k") 'forward-paragraph)
+(global-set-key (kbd "H-M-i") 'backward-paragraph)
+(global-set-key (kbd "C-M-j") 'smart-backward-to-word)
+(global-set-key (kbd "C-M-l") 'smart-forward-to-word)
+(global-set-key (kbd "C-h") 'newline-and-indent)
+(global-set-key (kbd "C-u") 'delete-backward-char)
+(global-set-key (kbd "M-u") 'delete-backward-char)
+(global-set-key (kbd "C-o") 'delete-forward-char)
+(global-set-key (kbd "M-o") 'delete-forward-char)
+(global-set-key (kbd "C-M-u") 'smart-delete-word-backward)
+(global-set-key (kbd "C-M-o") 'smart-delete-word-forward)
+
+; default keys
 (global-set-key [home] 'smart-beginning-of-line)
 (global-set-key (kbd "C-a") 'smart-beginning-of-line)
 (global-set-key [end] 'smart-end-of-line)
 (global-set-key (kbd "C-e") 'smart-end-of-line)
-
 (global-set-key (kbd "M-f") 'smart-forward-to-word)
 (global-set-key (kbd "M-b") 'smart-backward-to-word)
 (global-set-key [C-right] 'smart-forward-to-word)
@@ -44,3 +67,6 @@
 (global-set-key (kbd "<C-return>") 'find-tag-under-cursor)
 ;(global-set-key (kbd "M-.") 'semantic-ia-fast-jump)
 ;(global-set-key (kbd "C-M-.") 'find-tag)
+
+(global-set-key (kbd "<C-tab>") 'semantic-ia-complete-symbol)
+
