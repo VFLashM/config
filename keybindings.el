@@ -1,3 +1,5 @@
+(keyboard-translate ?\C-h ?\C-?) ;backspace fix
+
 (global-set-key (kbd "\e\e e") 'ecb-activate) ;; ecb activation
 (global-set-key (kbd "\e\e l") 'check-setup-ide) ;; ecb activation
 
