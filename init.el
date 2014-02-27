@@ -3,9 +3,10 @@
 (add-to-list 'load-path config-dir)
 (add-to-list 'load-path (concat config-dir "ac"))
 (add-to-list 'load-path (concat config-dir "yasnippet"))
+(add-to-list 'load-path (concat config-dir "tomorrow-theme"))
 (load-file (concat config-dir "lua-mode.el"))
 
-(load-file (concat config-dir "tomorrow-night-colorful-theme.el"))
+(load-file (concat config-dir "tomorrow-theme/tomorrow-night-eighties-theme.el"))
 (load-file (concat config-dir "ide-projects.el"))
 (load-file (concat config-dir "config.el"))
 
