@@ -3,6 +3,7 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+(setq ring-bell-function 'ignore)
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width global-tab-width)
