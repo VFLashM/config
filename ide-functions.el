@@ -124,7 +124,7 @@
   "browse project classes"
   (interactive)
   (shell-command
-   (concat "cd " project-path " && find . -iname '*.cpp' -or -iname '*.h' | etags -"))
+   (concat "etagProject " project-path))
   (setq tags-file-name (concat project-path "/TAGS"))
   )
 
@@ -182,6 +182,7 @@
  
   (add-hook 'c-mode-hook 'c-mode-init)
   (add-hook 'c++-mode-hook 'c-mode-init)
+  (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map (kbd "RET") 'newline-and-indent)))
   )
 
 (defun cut-trailing-slash (fpath)
