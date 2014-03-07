@@ -57,6 +57,8 @@
 
 (global-set-key [C-next] 'cycle-buffers-next)
 (global-set-key [C-prior] 'cycle-buffers-prev)
+(global-set-key [C-S-next] 'buffer-menu)
+(global-set-key [C-S-prior] 'buffer-menu-other-window)
 
 (global-set-key (kbd "C-<f3>") 'fast-search-forward)
 (global-set-key (kbd "C-S-<f3>") 'fast-search-backward)
