@@ -42,8 +42,7 @@
 (setq auto-mode-alist (cons '("\\.SConscript$" . python-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.SConstruct$" . python-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\SConstruct$" . python-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.bobj$" . xml-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.cobj$" . xml-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.prc$" . sql-mode) auto-mode-alist))
 
 ;(set-language-environment "Japanese")
 ;(load-library "anthy")
