@@ -51,7 +51,7 @@
   (interactive)
   (save-buffer)
   (if (eq major-mode 'python-mode)
-      (compile (concat "pylint " (buffer-file-name)))
+      (compile (concat "pylint --msg-template=\"{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}\" " (buffer-file-name)))
       (compile (concat "scons -D "
                    (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
                    ".cpp")))
