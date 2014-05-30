@@ -51,7 +51,7 @@
   (interactive)
   (save-buffer)
   (if (eq major-mode 'python-mode)
-      (compile (concat "pylint -f parseable " (buffer-file-name)))
+      (compile (concat "pylint " (buffer-file-name)))
       (compile (concat "scons -D "
                    (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
                    ".cpp")))
