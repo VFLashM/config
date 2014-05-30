@@ -49,10 +49,12 @@
 (defun save-and-compile ()
   "save and compile one file"
   (interactive)
-  (save-buffer) 
-  (compile (concat "scons -D "
+  (save-buffer)
+  (if (eq major-mode 'python-mode)
+      (compile (concat "pylint -f parseable " (buffer-file-name)))
+      (compile (concat "scons -D "
                    (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
-                   ".cpp"))
+                   ".cpp")))
   (message "compiled!"))
 
 (defun find-corresponding-ext-file (find-ext find-paths)
