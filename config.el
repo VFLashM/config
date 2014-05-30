@@ -37,6 +37,7 @@
 (setq tags-revert-without-query t)
 
 (setq auto-mode-alist (cons '("\\.h$" . c++-mode) auto-mode-alist))
+;(setq auto-mode-alist (cons '("\\.c$" . c-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.mm$" . objc-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("^CMakeLists.txt$" . sh-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.SConscript$" . python-mode) auto-mode-alist))

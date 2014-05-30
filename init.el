@@ -18,4 +18,4 @@
 
 (load-file (concat config-dir "keybindings.el"))
 
-;(setup-ide)
+(setup-ide)

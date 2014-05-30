@@ -179,11 +179,28 @@
   (add-to-list 'ac-clang-flags "-IC:/MinGW/lib/gcc/mingw32/4.5.2/include")
   (add-to-list 'ac-clang-flags "-IC:/MinGW/lib/gcc/mingw32/4.5.2/include/c++")
   (add-to-list 'ac-clang-flags "-IC:/MinGW/lib/gcc/mingw32/4.5.2/include/c++/mingw32")
- 
+
+  (require 'flymake)
+  (require 'flymake-cursor)
+  (defun flymake-pylint-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "epylint" (list local-file))))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pylint-init))
+
+  (custom-set-variables
+     '(help-at-pt-timer-delay 0.9)
+     '(help-at-pt-display-when-idle '(flymake-overlay)))
+
   (add-hook 'c-mode-hook 'c-mode-init)
   (add-hook 'c++-mode-hook 'c-mode-init)
   (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map (kbd "RET") 'newline-and-indent)))
-  )
+  (add-hook 'python-mode-hook '(lambda () (flymake-mode)))
+)
 
 (defun cut-trailing-slash (fpath)
   (if (or
