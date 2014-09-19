@@ -160,6 +160,13 @@
   (set-face-attribute 'flycheck-warning nil :underline "orange")
   (setq flycheck-highlighting-mode 'lines)
   (yas-global-mode 1)
+  (pymacs-load "ropemacs" "rope-")
+  (setq ropemacs-enable-autoimport t)
+  (ac-config-default)
+  ;(ac-ropemacs-initialize)
+  (add-hook 'python-mode-hook
+            (lambda ()
+    (add-to-list 'ac-sources 'ac-source-ropemacs)))
 )
 
 (defun cut-trailing-slash (fpath)

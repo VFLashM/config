@@ -73,5 +73,5 @@
 ;(global-set-key (kbd "M-.") 'semantic-ia-fast-jump)
 ;(global-set-key (kbd "C-M-.") 'find-tag)
 
-(global-set-key (kbd "<C-tab>") 'semantic-ia-complete-symbol)
+(global-set-key (kbd "<C-tab>") 'auto-complete)
 
