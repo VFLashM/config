@@ -67,7 +67,5 @@
 
 (global-set-key (kbd "C-S-f") 'search-in-project)
 
-(global-set-key (kbd "M-.") 'find-tag)
-(global-set-key (kbd "<C-return>") 'find-tag-under-cursor)
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "<C-tab>") 'auto-complete)
