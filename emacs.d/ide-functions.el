@@ -1,9 +1,31 @@
+(require 'cl-lib)
 (setq project-path (car (car projects)))
 (setq project-name (car (cdr (car projects))))
+
+(defun choose-variant (list)
+  (popup-menu* list))
+
+(defun get-file-project-dir (path)
+  (if (or (equal path nil) (equal path ""))
+      nil
+    (if (string-suffix-p "/" path)
+        (get-file-project-path (substring path 0 -1))
+      (if (file-exists-p (concat path "/.ropeproject"))
+          (concat path "/")
+        (get-file-project-path (file-name-directory path))
+        ))))
 
 (defun fix-slashes (fpath)
   (replace-regexp-in-string "\\\\" "/" fpath)
   )
+
+(defun choose-buffer ()
+  (interactive)
+  (set-window-buffer (selected-window)
+                     (choose-variant
+                       (mapcar 'buffer-name (cl-remove-if-not 'buffer-file-name (buffer-list)))
+                      )
+                     ))
 
 (setq file-relative-paths '("./" "Src/" "../"))
 (setq qt-dir
@@ -130,19 +152,6 @@
   (setq tags-file-name (concat project-path "/TAGS"))
   )
 
-(defun c-mode-init ()
-  (local-set-key (kbd "RET") 'newline-and-indent)
-  
-  (setq ac-sources '(ac-source-clang))
-
-  (setq ac-auto-start nil)
-  (define-key ac-mode-map (kbd "<C-tab>") 'auto-complete)
-  (auto-complete-mode)
-  (yas/minor-mode)
-
-  (delete-selection-mode 1)
-  )
-
 (defun check-setup-ide ()
   "setup ide if not setted up"
   (interactive)
@@ -166,7 +175,12 @@
   ;(ac-ropemacs-initialize)
   (add-hook 'python-mode-hook
             (lambda ()
-    (add-to-list 'ac-sources 'ac-source-ropemacs)))
+              (add-to-list 'ac-sources 'ac-source-ropemacs)
+              (setq yas/indent-line 'fixed)
+              (define-key yas-minor-mode-map (kbd "<tab>") nil)
+              (define-key yas-minor-mode-map (kbd "TAB") nil)
+              (define-key yas-minor-mode-map (kbd "C-`") 'yas-expand)
+              ))
 )
 
 (defun cut-trailing-slash (fpath)
