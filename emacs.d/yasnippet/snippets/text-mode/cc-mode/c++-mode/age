@@ -1,0 +1,4 @@
+#name : age assertGreaterOrEqual(..., ...)
+# --
+assertGreaterOrEqual(${1:}, ${2:});
+$0
