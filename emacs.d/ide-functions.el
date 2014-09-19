@@ -154,54 +154,12 @@
   )
 
 (defun setup-ide ()
-  ;(etag-project)
-  (require 'yasnippet)
-  (setq yas/root-directory (concat config-dir "yasnippet/snippets"))
-  (yas/load-directory yas/root-directory)
-
-  (require 'auto-complete)
-  (require 'auto-complete-clang)
-  (if (not ac-clang-executable)
-      (setq ac-clang-executable "C:/Programming/llvm/build/bin/RelWithDebInfo/clang.exe")
-  )
-  (add-to-list 'ac-clang-flags (concat "-I" project-path "Src"))
-  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty"))
-  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty/glew-1.7.0/include"))
-  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty/libpng-1.5.4"))
-  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty/zlib-1.2.5"))
-  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty/openal-1.1/include"))
-  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty/freealut-1.1.0-src/include"))
-  (add-to-list 'ac-clang-flags (concat "-I" project-path "ThirdParty/Tremor"))
-
-  (add-to-list 'ac-clang-flags "-DTARGET_PLATFORM_WINDOWS")
-  (add-to-list 'ac-clang-flags "-DTARGET_PLATFORM_WINDOWS_MINGW")
-  (add-to-list 'ac-clang-flags "-D_MSC_VER")
-  (add-to-list 'ac-clang-flags "-D__MSVCRT__")
-  (add-to-list 'ac-clang-flags "-IC:/MinGW/include")
-  (add-to-list 'ac-clang-flags "-IC:/MinGW/lib/gcc/mingw32/4.5.2/include")
-  (add-to-list 'ac-clang-flags "-IC:/MinGW/lib/gcc/mingw32/4.5.2/include/c++")
-  (add-to-list 'ac-clang-flags "-IC:/MinGW/lib/gcc/mingw32/4.5.2/include/c++/mingw32")
-
-  (require 'flymake)
-  (require 'flymake-cursor)
-  (defun flymake-pylint-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "epylint" (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pylint-init))
-
-  (custom-set-variables
-     '(help-at-pt-timer-delay 0.9)
-     '(help-at-pt-display-when-idle '(flymake-overlay)))
-
-  (add-hook 'c-mode-hook 'c-mode-init)
-  (add-hook 'c++-mode-hook 'c-mode-init)
-  (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map (kbd "RET") 'newline-and-indent)))
-  (add-hook 'python-mode-hook '(lambda () (flymake-mode)))
+  (setq-default flycheck-disabled-checkers '(python-flake8))
+  (global-flycheck-mode)
+  (set-face-attribute 'flycheck-error nil :underline "red")
+  (set-face-attribute 'flycheck-warning nil :underline "orange")
+  (setq flycheck-highlighting-mode 'lines)
+  (yas-global-mode 1)
 )
 
 (defun cut-trailing-slash (fpath)

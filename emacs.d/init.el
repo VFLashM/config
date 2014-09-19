@@ -1,10 +1,22 @@
+(setq package-list '(yasnippet lua-mode flycheck cl cl-lib))
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+
+(package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+
 (setq config-dir (file-name-directory load-file-name))
 
 (add-to-list 'load-path config-dir)
-(add-to-list 'load-path (concat config-dir "ac"))
-(add-to-list 'load-path (concat config-dir "yasnippet"))
 (add-to-list 'load-path (concat config-dir "tomorrow-theme"))
-(load-file (concat config-dir "lua-mode.el"))
 
 (load-file (concat config-dir "tomorrow-theme/tomorrow-night-eighties-theme.el"))
 (load-file (concat config-dir "ide-projects.el"))
@@ -18,4 +30,4 @@
 
 (load-file (concat config-dir "keybindings.el"))
 
-(setup-ide)
+(add-hook 'after-init-hook 'setup-ide)
