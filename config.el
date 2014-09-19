@@ -25,6 +25,8 @@
 (setq scroll-perspective-screen-position 't)
 
 (if (display-graphic-p) 
+    (set-frame-font "DejaVu Sans Mono-10"))
+(if (display-graphic-p)
     (set-face-attribute 'default nil :font "DejaVu Sans Mono-10"))
 (if (display-graphic-p)
     (set-face-attribute 'default nil :height 90))
