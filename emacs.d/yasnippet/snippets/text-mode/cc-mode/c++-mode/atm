@@ -1,4 +1,0 @@
-#name : atm assertTrueMsg(..., ...)
-# --
-assertTrueMsg(${1:false}, "${2:}");
-$0

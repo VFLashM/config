@@ -1,4 +1,0 @@
-#name : al assertLess(..., ...)
-# --
-assertLess(${1:}, ${2:});
-$0

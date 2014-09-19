@@ -1,4 +1,0 @@
-#name : aem assertEqualsMsg(..., ..., ...)
-# --
-assertEqualsMsg(${1:}, ${2:}, "${3:}");
-$0

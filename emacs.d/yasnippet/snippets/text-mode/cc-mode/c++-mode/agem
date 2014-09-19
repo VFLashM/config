@@ -1,4 +1,0 @@
-#name : agem assertGreaterOrEqualMsg(..., ..., ...)
-# --
-assertGreaterOrEqualMsg(${1:}, ${2:}, "${3:}");
-$0

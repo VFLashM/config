@@ -1,4 +1,0 @@
-#name : alm assertLessMsg(..., ..., ...)
-# --
-assertLessMsg(${1:}, ${2:}, "${3:}");
-$0

@@ -1,4 +1,0 @@
-#name : ag assertGreater(..., ...)
-# --
-assertGreater(${1:}, ${2:});
-$0

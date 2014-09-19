@@ -1,4 +1,0 @@
-#name : at assertTrue(...)
-# --
-assertTrue(${1:false});
-$0

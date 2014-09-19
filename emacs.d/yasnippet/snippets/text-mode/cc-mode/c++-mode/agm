@@ -1,4 +1,0 @@
-#name : agm assertGreaterMsg(..., ..., ...)
-# --
-assertGreaterMsg(${1:}, ${2:}, "${3:}");
-$0

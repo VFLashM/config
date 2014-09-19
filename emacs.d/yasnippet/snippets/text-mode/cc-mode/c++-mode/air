@@ -1,4 +1,0 @@
-#name : ae assertInRange(..., ..., ...)
-# --
-assertInRange(${1:}, ${2:0}, ${3:});
-$0

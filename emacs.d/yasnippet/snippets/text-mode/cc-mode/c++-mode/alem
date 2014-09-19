@@ -1,4 +1,0 @@
-#name : alem assertLessOrEqualMsg(..., ..., ...)
-# --
-assertLessOrEqualMsg(${1:}, ${2:}, "${3:}");
-$0
