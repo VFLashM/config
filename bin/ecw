@@ -1,0 +1,7 @@
+#!/bin/sh
+xwininfo -tree -root | grep -q emacs@$(hostname) 
+if [ $? -eq 0 ]; then
+    emacsclient -a "" -d $DISPLAY $*
+else
+    emacsclient -c -a "" -d $DISPLAY $*
+fi
