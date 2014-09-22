@@ -47,6 +47,14 @@
         (if project
             (choose-project-file project))))
 
+(defun search-in-project (regexp files)
+  (interactive
+   (let*
+       ((regexp (grep-read-regexp))
+        (files (grep-read-files regexp)))
+     (list regexp files)))
+  (rgrep regexp "*.el" (get-current-project-dir) nil))
+
 (defun vc-status-project ()
   (interactive)
   (let ((pdir (get-current-project-dir)))

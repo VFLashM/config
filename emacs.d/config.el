@@ -7,6 +7,7 @@
 (delete-selection-mode 1)
 
 (setq-default indent-tabs-mode nil)
+(setq global-tab-width 4)
 (setq-default tab-width global-tab-width)
 (setq lua-indent-level global-tab-width)
 (setq c-basic-offset global-tab-width)

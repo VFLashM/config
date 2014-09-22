@@ -19,7 +19,6 @@
 (add-to-list 'load-path (concat config-dir "tomorrow-theme"))
 
 (load-file (concat config-dir "tomorrow-theme/tomorrow-night-eighties-theme.el"))
-(load-file (concat config-dir "ide-projects.el"))
 (load-file (concat config-dir "config.el"))
 
 (load-file (concat config-dir "aux.el"))
@@ -28,7 +27,6 @@
 
 (load-file (concat config-dir "ide-functions.el"))
 (load-file (concat config-dir "ide-fast-search.el"))
-(load-file (concat config-dir "ide-search-in-project.el"))
 
 (load-file (concat config-dir "keybindings.el"))
 
