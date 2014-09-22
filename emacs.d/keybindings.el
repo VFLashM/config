@@ -9,18 +9,18 @@
 (global-set-key (kbd "C-<f7>") 'save-and-compile)
 (global-set-key (kbd "S-<f5>") 'kill-compilation)
 
-(global-set-key (kbd "C-.") 'start-kbd-macro)
-(global-set-key (kbd "C-,") 'end-kbd-macro)
-(global-set-key (kbd "C-S-g") 'call-last-kbd-macro)
+(global-set-key (kbd "C-.") 'trigger-kbd-macro)
+(global-set-key (kbd "C-S-g") 'kmacro-end-and-call-macro)
 
 (global-set-key (kbd "C-S-d") 'find-file-in-project)
 (global-set-key (kbd "C-S-e") 'ebrowse-project)
-(global-set-key (kbd "C-S-c") 'find-corresponding-file)
-(global-set-key (kbd "C-S-p") 'change-project)
+(global-set-key (kbd "C-S-c") 'cycle-linked-file)
+(global-set-key (kbd "C-S-p") 'choose-project)
+(global-set-key (kbd "C-S-n") 'choose-current-project-file)
 
 (global-set-key (kbd "C-c c") 'comment-region)
 (global-set-key (kbd "C-c u") 'uncomment-region)
-(global-set-key (kbd "C-c v") 'svnbrowse-project)
+(global-set-key (kbd "C-x v p") 'vc-status-project)
 
 ; jkli keys
 ;; (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
