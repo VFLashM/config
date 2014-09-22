@@ -1,8 +1,5 @@
 (keyboard-translate ?\C-h ?\C-?) ;backspace fix
 
-(global-set-key (kbd "\e\e e") 'ecb-activate) ;; ecb activation
-(global-set-key (kbd "\e\e l") 'check-setup-ide) ;; ecb activation
-
 (global-set-key (kbd "<f5>") 'save-and-run)
 (global-set-key (kbd "C-<f5>") 'save-and-test)
 (global-set-key (kbd "<f7>") 'save-and-make)
@@ -12,15 +9,13 @@
 (global-set-key (kbd "C-.") 'trigger-kbd-macro)
 (global-set-key (kbd "C-S-g") 'kmacro-end-and-call-macro)
 
-(global-set-key (kbd "C-S-d") 'find-file-in-project)
+(global-set-key (kbd "C-S-d") 'choose-project-file)
 (global-set-key (kbd "C-S-e") 'ebrowse-project)
 (global-set-key (kbd "C-S-c") 'cycle-linked-file)
 (global-set-key (kbd "C-S-p") 'choose-project-and-file)
-(global-set-key (kbd "C-S-n") 'choose-project-file)
 
 (global-set-key (kbd "C-c c") 'comment-region)
 (global-set-key (kbd "C-c u") 'uncomment-region)
-(global-set-key (kbd "C-x v p") 'vc-status-project)
 
 ; jkli keys
 ;; (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
@@ -66,6 +61,7 @@
 (global-set-key (kbd "S-<f3>") 'fast-search-prev)
 
 (global-set-key (kbd "C-S-f") 'search-in-project)
+(global-set-key (kbd "C-x v p") 'vc-status-project)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "<C-tab>") 'auto-complete)
