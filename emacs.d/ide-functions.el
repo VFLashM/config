@@ -72,18 +72,6 @@
         (vc-dir pdir)
       (call-interactively 'vc-dir))))
 
-(defun find-corresponding-ext-file (find-ext find-paths)
-  "find corresponding header file"
-  (set 'fname (concat 
-           (concat (file-name-directory (buffer-file-name)) (car find-paths)) 
-           (file-name-nondirectory (concat (file-name-sans-extension (buffer-file-name)) "." find-ext))))
-  (if (file-exists-p fname) 
-      (find-file fname)
-    (if (> (length find-paths) 1) 
-    (find-corresponding-ext-file find-ext (cdr find-paths))))
-  )
-
-
 (defun get-linked-extensions ()
   '("h" "cpp" "c" "mm" "m" "hpp" "cxx"))
 
@@ -170,5 +158,4 @@
               (define-key yas-minor-mode-map (kbd "<tab>") nil)
               (define-key yas-minor-mode-map (kbd "TAB") nil)
               (define-key yas-minor-mode-map (kbd "C-`") 'yas-expand)
-              (local-set-key (kbd "<C-return>") 'rope-goto-definition)
-              )))
+              (local-set-key (kbd "<C-return>") 'rope-goto-definition))))
