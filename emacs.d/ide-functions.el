@@ -1,4 +1,5 @@
 (require 'cl-lib)
+(require 'grep)
 
 ;;; Code:
 
@@ -23,41 +24,50 @@
 (defun get-current-project-dir ()
   (get-file-project-dir (buffer-file-name (current-buffer))))
 
+(defun choose-project ()
+  (choose-variant (delete-dups (delq nil (mapcar 'get-file-project-dir (mapcar 'buffer-file-name (buffer-list)))))))
+
+(defun get-or-choose-project-dir ()
+  (or (get-current-project-dir) (choose-project)))
+
 (defun choose-buffer ()
   (interactive)
-  (set-window-buffer (selected-window)
-                     (choose-variant
-                       (mapcar 'buffer-name (cl-remove-if-not 'buffer-file-name (buffer-list)))
-                      )
-                     ))
+  (set-window-buffer
+   (selected-window)
+   (choose-variant
+    (mapcar 'buffer-name
+            (cl-remove-if-not 'buffer-file-name (buffer-list))))))
 
-(defun choose-project-file (project-dir)
+(defun choose-project-file (&optional project-dir)
+  (interactive)
+  (setq project-dir (or project-dir (get-or-choose-project-dir)))
   (if project-dir
       (let ((path (choose-variant (fs-list-files-recursively project-dir))))
         (if path
             (find-file (concat project-dir path))))))
 
-(defun choose-current-project-file ()
+(defun choose-project-and-file ()
   (interactive)
-  (choose-project-file (get-current-project-dir)))
+  (let ((project (choose-project)))
+    (if project
+        (choose-project-file project))))
 
-(defun choose-project ()
-  (interactive)
-  (let ((project (choose-variant (delete-dups (delq nil (mapcar 'get-file-project-dir (mapcar 'buffer-file-name (buffer-list))))))))
-        (if project
-            (choose-project-file project))))
-
-(defun search-in-project (regexp files)
+(defun search-in-project (project regexp files)
   (interactive
-   (let*
-       ((regexp (grep-read-regexp))
-        (files (grep-read-files regexp)))
-     (list regexp files)))
-  (rgrep regexp "*.el" (get-current-project-dir) nil))
+   (progn 
+     (grep-compute-defaults)
+     (let*
+         ((project (get-or-choose-project-dir))
+          (regexp (and project (grep-read-regexp)))
+          (files (and project (grep-read-files regexp))))
+       (list project regexp files))))
+  (if (and project regexp)
+      (rgrep regexp files project nil)
+    (message "No project selected")))
 
 (defun vc-status-project ()
   (interactive)
-  (let ((pdir (get-current-project-dir)))
+  (let ((pdir (get-or-choose-project-dir)))
     (if pdir
         (vc-dir pdir)
       (call-interactively 'vc-dir))))

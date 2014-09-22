@@ -15,8 +15,8 @@
 (global-set-key (kbd "C-S-d") 'find-file-in-project)
 (global-set-key (kbd "C-S-e") 'ebrowse-project)
 (global-set-key (kbd "C-S-c") 'cycle-linked-file)
-(global-set-key (kbd "C-S-p") 'choose-project)
-(global-set-key (kbd "C-S-n") 'choose-current-project-file)
+(global-set-key (kbd "C-S-p") 'choose-project-and-file)
+(global-set-key (kbd "C-S-n") 'choose-project-file)
 
 (global-set-key (kbd "C-c c") 'comment-region)
 (global-set-key (kbd "C-c u") 'uncomment-region)
