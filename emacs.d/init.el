@@ -22,6 +22,8 @@
 (load-file (concat config-dir "ide-projects.el"))
 (load-file (concat config-dir "config.el"))
 
+(load-file (concat config-dir "aux.el"))
+(load-file (concat config-dir "fs.el"))
 (load-file (concat config-dir "base-edit-functions.el"))
 
 (load-file (concat config-dir "ide-functions.el"))
