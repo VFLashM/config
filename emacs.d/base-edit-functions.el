@@ -1,4 +1,4 @@
-;(require 'misc) ; for forward-to-word backward-to-word
+(require 'aux)                                        
 
 (defun smart-beginning-of-line ()
   "Move point to first non-whitespace character or beginning-of-line.
@@ -69,65 +69,47 @@ If point was already at that position, move point to beginning of line."
     )
 )
 
-(defun select-first-file-buffer (list)
-  (if list
-      (progn
-	(if (buffer-file-name (car list))
-	    (car list)
-	  (select-first-file-buffer (cdr list))
-	  )
-	)
-    )
-  )
-
-(defun shift-list (list)
-  (append (cdr list) (cons (car list) '()))
-  )
-
-(defun select-next-file-buffer (list)
-  (if (equal (current-buffer) (car list))
-      (select-first-file-buffer 
-        (shift-list list)
-       )
-    (select-next-file-buffer (shift-list list))
-    )
-  )
-
-(defun set-buffer-if-not-nil (buffer)
-  (if buffer 
-      (set-window-buffer (selected-window) (buffer-name buffer)))
-  )
-
-(defun cycle-buffers-next ()
-  "switching to the next buffer, burying previous one"
-  (interactive)
-  (set-buffer-if-not-nil (select-next-file-buffer (buffer-list)))
-  )
-
-(defun cycle-buffers-prev()
-  "switching to the prev buffer, burying previous one"
-  (interactive)
-  (set-buffer-if-not-nil (select-next-file-buffer (reverse (buffer-list))))
-  )
-
 (defun smart-delete-word-backward ()
   ""
   (interactive)
-  (let (
-	(pos (point))
-	)
+  (let ((pos (point)))
     (smart-backward-to-word)
-    (delete-region pos (point))
-    )
-  )
+    (delete-region pos (point))))
   
 (defun smart-delete-word-forward ()
   ""
   (interactive)
-  (let (
-	(pos (point))
-	)
+  (let ((pos (point)))
     (smart-forward-to-word)
-    (delete-region pos (point))
-    )
-  )
+    (delete-region pos (point))))
+
+;;; buffer manipulation
+
+(defun set-buffer-if-not-nil (buffer)
+  (if buffer 
+      (set-window-buffer
+       (selected-window)
+       (buffer-name buffer))))
+
+(defun cycle-buffers-next ()
+  "switching to the next buffer, burying previous one"
+  (interactive)
+  (set-buffer-if-not-nil (aux-next-cycle-element (buffer-list) (current-buffer))))
+
+(defun cycle-buffers-prev()
+  "switching to the prev buffer, burying previous one"
+  (interactive)
+  (set-buffer-if-not-nil (aux-next-cycle-element (reverse (buffer-list)) (current-buffer))))
+
+;;; kbd macro
+
+(setq recording-kbd-macro nil)
+(defun trigger-kbd-macro ()
+  (interactive)
+  (if recording-kbd-macro
+      (progn
+        (end-kbd-macro)
+        (setq recording-kbd-macro nil))
+    (progn
+        (start-kbd-macro nil)
+        (setq recording-kbd-macro t))))
