@@ -1,5 +1,6 @@
 (require 'cl-lib)
 (require 'grep)
+(require 'vc)
 
 ;;; Code:
 
@@ -22,7 +23,7 @@
       )))
 
 (defun get-current-project-dir ()
-  (get-file-project-dir (buffer-file-name (current-buffer))))
+  (get-file-project-dir (or (buffer-file-name (current-buffer)) default-directory)))
 
 (defun choose-project ()
   (choose-variant (delete-dups (delq nil (mapcar 'get-file-project-dir (mapcar 'buffer-file-name (buffer-list)))))))
@@ -73,11 +74,11 @@
         (vc-dir project)
       (call-interactively 'vc-dir))))
 
-(defun vc-diff-keep-window ()
-  (interactive)
+(defadvice vc-diff (around vc-diff-keep-window)
   (let ((window (get-buffer-window (current-buffer))))
-    (call-interactively 'vc-diff)
+    ad-do-it
     (select-window window)))
+(ad-activate 'vc-diff)
 
 (defun get-linked-extensions ()
   '("h" "cpp" "c" "mm" "m" "hpp" "cxx"))
