@@ -62,6 +62,7 @@
 
 (global-set-key (kbd "C-S-f") 'search-in-project)
 (global-set-key (kbd "C-x v p") 'vc-status-project)
+(global-set-key (kbd "C-x v =") 'vc-diff-keep-window)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "<C-tab>") 'auto-complete)

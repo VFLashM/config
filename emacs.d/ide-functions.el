@@ -50,7 +50,8 @@
   (interactive)
   (let ((project (choose-project)))
     (if project
-        (choose-project-file project))))
+        (choose-project-file project)
+      (message "No project selected"))))
 
 (defun search-in-project (project regexp files)
   (interactive
@@ -67,10 +68,16 @@
 
 (defun vc-status-project ()
   (interactive)
-  (let ((pdir (get-or-choose-project-dir)))
-    (if pdir
-        (vc-dir pdir)
+  (let ((project (get-or-choose-project-dir)))
+    (if project
+        (vc-dir project)
       (call-interactively 'vc-dir))))
+
+(defun vc-diff-keep-window ()
+  (interactive)
+  (let ((window (get-buffer-window (current-buffer))))
+    (call-interactively 'vc-diff)
+    (select-window window)))
 
 (defun get-linked-extensions ()
   '("h" "cpp" "c" "mm" "m" "hpp" "cxx"))
