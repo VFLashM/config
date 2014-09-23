@@ -1,6 +1,7 @@
 (require 'cl-lib)
 (require 'grep)
 (require 'vc)
+(require 'popup)
 
 ;;; Code:
 

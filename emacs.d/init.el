@@ -21,7 +21,7 @@
 (load-file (concat config-dir "tomorrow-theme/tomorrow-night-eighties-theme.el"))
 (load-file (concat config-dir "config.el"))
 
-(load-file (concat config-dir "aux.el"))
+(load-file (concat config-dir "auxfun.el"))
 (load-file (concat config-dir "fs.el"))
 (load-file (concat config-dir "base-edit-functions.el"))
 

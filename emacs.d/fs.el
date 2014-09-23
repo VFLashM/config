@@ -25,12 +25,4 @@
 (defun fs-list-files-recursively (dir &optional filter)
   (cl-remove-if (lambda (x) (equal (substring x -1) "/")) (fs-list-recursively dir filter)))
 
-;; (fs-list-dirs "/home/lashmano/config")
-;; (fs-list-files "/home/lashmano/config")
-(fs-list-recursively "/home/lashmano/bin")
-(fs-list-recursively "/home/lashmano/config")
-
-(fs-list-files-recursively "/home/lashmano/config")
-;; (fs-list-dirs-recursively "/home/lashmano/config")
-
 (provide 'fs)
