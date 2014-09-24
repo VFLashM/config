@@ -1,6 +1,12 @@
 (require 'aux)
 (require 'cl-lib)
 
+(defun fs-dirname (path)
+  (let ((dirname (file-name-directory (substring (file-name-as-directory path) 0 -1))))
+    (if (equal dirname path) ; windows drive root
+        nil
+      dirname)))
+
 (defun fs-is-hidden (path)
   (if (string-match "^\\([#.].*\\)\\|\\(.*~\\)\\|\\(.*[.]pyc\\)$" path) t))
 

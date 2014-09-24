@@ -2,6 +2,7 @@
 (require 'grep)
 (require 'vc)
 (require 'popup)
+(require 'fs)
 
 ;;; Code:
 
@@ -11,17 +12,19 @@
           (popup-menu* list :isearch t)
         (car list))))
 
+(defun is-project-root (path)
+  (let ((dir-path (file-name-as-directory path)))
+    (or
+     (file-exists-p (concat dir-path ".ropeproject"))
+     (file-exists-p (concat dir-path ".git"))
+     (file-exists-p (concat dir-path "SConstruct")))))
+
 (defun get-file-project-dir (path)
   (if (or (equal path nil) (equal path ""))
       nil
-    (let ((dir-path (file-name-as-directory path)))
-      (if (or
-           (file-exists-p (concat dir-path ".ropeproject"))
-           (file-exists-p (concat dir-path ".git")))
-          dir-path
-        (get-file-project-dir (file-name-directory (substring dir-path 0 -1)))
-        )
-      )))
+    (if (is-project-root path)
+        (file-name-as-directory path)
+      (get-file-project-dir (fs-dirname path)))))
 
 (defun get-current-project-dir ()
   (get-file-project-dir (or (buffer-file-name (current-buffer)) default-directory)))
