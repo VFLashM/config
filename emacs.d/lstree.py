@@ -34,4 +34,4 @@ def lstree(root):
             
 assert len(sys.argv) == 2
 for name in lstree(os.path.expanduser(sys.argv[1])):
-    print name
+    sys.stdout.write(name + '\n')
