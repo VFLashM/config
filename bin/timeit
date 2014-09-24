@@ -10,8 +10,8 @@ if len(sys.argv) > 1 and sys.argv[1] == '-e':
     sys.argv.pop(1)
 
 if len(sys.argv) == 1:
-    print 'Usage: timeit [-e] <command> <args>'
-    print '\t-e redirects timeit output into stderr'
+    sys.stdout.write('Usage: timeit [-e] <command> <args>\n')
+    sys.stdout.write('\t-e redirects timeit output into stderr\n')
     sys.exit(1)
     
 before = time.time()
