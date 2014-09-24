@@ -1,4 +1,4 @@
-(setq package-list '(yasnippet lua-mode flycheck cl cl-lib pymacs auto-complete popup markdown-mode))
+(setq package-list '(yasnippet lua-mode flycheck cl cl-lib pymacs auto-complete popup markdown-mode python-environment jedi))
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)

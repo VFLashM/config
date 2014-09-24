@@ -153,21 +153,39 @@
 ;;; Entry point
 
 (defun setup-ide ()
+  (interactive)
+
+  ; flycheck
   (setq-default flycheck-disabled-checkers '(python-flake8))
-  (global-flycheck-mode)
-  (set-face-attribute 'flycheck-error nil :underline "red")
-  (set-face-attribute 'flycheck-warning nil :underline "orange")
   (setq flycheck-highlighting-mode 'lines)
+  (if (not (eq system-type 'windows-nt))
+      (progn
+        (global-flycheck-mode)
+        (set-face-attribute 'flycheck-error nil :underline "red")
+        (set-face-attribute 'flycheck-warning nil :underline "orange")))
+
+  ; yas
   (yas-global-mode 1)
+  
+  ; rope
   (pymacs-load "ropemacs" "rope-")
   (setq ropemacs-enable-autoimport t)
+  
   (ac-config-default)
-  ;(ac-ropemacs-initialize)
   (add-hook 'python-mode-hook
             (lambda ()
-              (add-to-list 'ac-sources 'ac-source-ropemacs)
+              ; ac setup
+              ;(add-to-list 'ac-sources 'ac-source-ropemacs)
+              (jedi:setup)
+
+              ; custom yas config
               (setq yas/indent-line 'fixed)
               (define-key yas-minor-mode-map (kbd "<tab>") nil)
               (define-key yas-minor-mode-map (kbd "TAB") nil)
               (define-key yas-minor-mode-map (kbd "C-`") 'yas-expand)
-              (local-set-key (kbd "<C-return>") 'rope-goto-definition))))
+
+              ; rope/jedi bindings
+              (local-set-key (kbd "<C-return>") 'jedi:goto-definition)
+              (local-set-key (kbd "C-M-v") 'rope-extract-variable)
+              (local-set-key (kbd "C-M-n") 'rope-inline)
+              (local-set-key (kbd "<f6>") 'rope-rename))))
