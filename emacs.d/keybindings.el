@@ -23,6 +23,7 @@
 (global-set-key (kbd "C-S-e") 'ebrowse-project)
 (global-set-key (kbd "C-S-c") 'cycle-linked-file)
 (global-set-key (kbd "C-S-p") 'choose-project-and-file)
+(global-set-key (kbd "C-S-l") 'choose-opened-file)
 
 (global-set-key (kbd "C-c c") 'comment-region)
 (global-set-key (kbd "C-c u") 'uncomment-region)
