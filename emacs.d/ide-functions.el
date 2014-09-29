@@ -35,12 +35,11 @@
 (defun get-or-choose-project-dir ()
   (or (get-current-project-dir) (choose-project)))
 
-(defun choose-buffer ()
+(defun choose-opened-file ()
   (interactive)
-  (set-window-buffer
-   (selected-window)
+  (find-file
    (choose-variant
-    (mapcar 'buffer-name
+    (mapcar 'buffer-file-name
             (cl-remove-if-not 'buffer-file-name (buffer-list))))))
 
 (defun choose-project-file (&optional project-dir)
