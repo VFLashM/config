@@ -29,8 +29,22 @@
 (defun get-current-project-dir ()
   (get-file-project-dir (or (buffer-file-name (current-buffer)) default-directory)))
 
+(defun permanent-projects ()
+  (let ((path (substitute-in-file-name "$HOME/.emacs.projects")))
+    (if (file-exists-p path)
+        (with-temp-buffer 
+          (insert-file-contents path)
+          (split-string (buffer-string) "\n" t))
+      (write-region "" nil path))))
+  
 (defun choose-project ()
-  (choose-variant (delete-dups (delq nil (mapcar 'get-file-project-dir (mapcar 'buffer-file-name (buffer-list)))))))
+  (choose-variant
+   (delete-dups
+    (delq nil
+          (append (permanent-projects)
+                  (mapcar 'get-file-project-dir
+                          (mapcar 'buffer-file-name
+                                  (buffer-list))))))))
 
 (defun get-or-choose-project-dir ()
   (or (get-current-project-dir) (choose-project)))
