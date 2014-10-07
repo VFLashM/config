@@ -34,7 +34,7 @@
     (if (file-exists-p path)
         (with-temp-buffer 
           (insert-file-contents path)
-          (split-string (buffer-string) "\n" t))
+          (mapcar 'expand-file-name (split-string (buffer-string) "\n" t)))
       (write-region "" nil path))))
   
 (defun choose-project ()
