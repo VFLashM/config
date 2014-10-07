@@ -27,4 +27,9 @@
       (funcall fn val)
     default))
 
+(defun aux-starts-with (string prefix)
+  (if (>= (length string) (length prefix))
+      (string= (substring string 0 (length prefix)) prefix)
+      nil))
+
 (provide 'aux)

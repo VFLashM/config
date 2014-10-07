@@ -21,4 +21,7 @@
 (defun fs-list-files-recursively (dir)
   (cl-remove-if (lambda (x) (equal (substring x -1) "/")) (fs-list-recursively dir)))
 
+(defun fs-is-prefix (path prefix)
+  (aux-starts-with path (file-name-as-directory prefix)))
+
 (provide 'fs)
