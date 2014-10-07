@@ -12,6 +12,21 @@
           (popup-menu* list :isearch t)
         (car list))))
 
+(defun permanent-projects ()
+  (let ((path (substitute-in-file-name "$HOME/.emacs.projects")))
+    (if (file-exists-p path)
+        (with-temp-buffer 
+          (insert-file-contents path)
+          (mapcar 'file-name-as-directory (mapcar 'expand-file-name (split-string (buffer-string) "\n" t))))
+      (write-region "" nil path))))
+
+(defun find-matching-permanent-project-for-path (path projects)
+  (if projects
+      (if (fs-is-prefix path (car projects))
+          (car projects)
+        (find-matching-permanent-project-for-path path (cdr projects)))
+    nil))
+
 (defun is-project-root (path)
   (let ((dir-path (file-name-as-directory path)))
     (or
@@ -22,20 +37,13 @@
 (defun get-file-project-dir (path)
   (if (or (equal path nil) (equal path ""))
       nil
-    (if (is-project-root path)
-        (file-name-as-directory path)
-      (get-file-project-dir (fs-dirname path)))))
-
+    (or (find-matching-permanent-project-for-path path (permanent-projects))
+        (if (is-project-root path)
+            (file-name-as-directory path)
+          (get-file-project-dir (fs-dirname path))))))
+  
 (defun get-current-project-dir ()
   (get-file-project-dir (or (buffer-file-name (current-buffer)) default-directory)))
-
-(defun permanent-projects ()
-  (let ((path (substitute-in-file-name "$HOME/.emacs.projects")))
-    (if (file-exists-p path)
-        (with-temp-buffer 
-          (insert-file-contents path)
-          (mapcar 'expand-file-name (split-string (buffer-string) "\n" t)))
-      (write-region "" nil path))))
   
 (defun choose-project ()
   (choose-variant
