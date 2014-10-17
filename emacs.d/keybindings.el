@@ -1,10 +1,20 @@
 (keyboard-translate ?\C-h ?\C-?) ;backspace fix
 
+; compilation
 (global-set-key (kbd "<f5>") 'save-and-run)
 (global-set-key (kbd "C-<f5>") 'save-and-test)
 (global-set-key (kbd "<f7>") 'save-and-make)
 (global-set-key (kbd "C-<f7>") 'save-and-compile)
 (global-set-key (kbd "S-<f5>") 'kill-compilation)
+
+; debugging
+(global-set-key (kbd "<f12>") 'gud-cont)
+(global-set-key (kbd "<f9>") 'gud-break)
+(global-set-key (kbd "<f10>") 'gud-next)
+(global-set-key (kbd "<f11>") 'gud-step)
+(global-set-key (kbd "C-<f11>") 'gud-stepi)
+(global-set-key (kbd "S-<f10>") 'gud-finish)
+(global-set-key (kbd "C-<f10>") 'gud-until)
 
 (global-set-key (kbd "C-.") 'trigger-kbd-macro)
 (global-set-key (kbd "C-S-g") 'kmacro-end-and-call-macro)
@@ -13,6 +23,7 @@
 (global-set-key (kbd "C-S-e") 'ebrowse-project)
 (global-set-key (kbd "C-S-c") 'cycle-linked-file)
 (global-set-key (kbd "C-S-p") 'choose-project-and-file)
+(global-set-key (kbd "C-S-l") 'choose-opened-file)
 
 (global-set-key (kbd "C-c c") 'comment-region)
 (global-set-key (kbd "C-c u") 'uncomment-region)

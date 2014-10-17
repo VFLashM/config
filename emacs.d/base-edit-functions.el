@@ -1,4 +1,5 @@
-(require 'aux)                                        
+(require 'aux)
+(require 'cl-lib)
 
 (defun smart-beginning-of-line ()
   "Move point to first non-whitespace character or beginning-of-line.
@@ -94,12 +95,12 @@ If point was already at that position, move point to beginning of line."
 (defun cycle-buffers-next ()
   "switching to the next buffer, burying previous one"
   (interactive)
-  (set-buffer-if-not-nil (aux-next-cycle-element (buffer-list) (current-buffer))))
+  (set-buffer-if-not-nil (aux-next-cycle-element (cl-remove-if-not 'buffer-file-name (buffer-list)) (current-buffer))))
 
 (defun cycle-buffers-prev()
   "switching to the prev buffer, burying previous one"
   (interactive)
-  (set-buffer-if-not-nil (aux-next-cycle-element (reverse (buffer-list)) (current-buffer))))
+  (set-buffer-if-not-nil (aux-next-cycle-element (reverse (cl-remove-if-not 'buffer-file-name (buffer-list))) (current-buffer))))
 
 ;;; kbd macro
 

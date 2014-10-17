@@ -22,8 +22,14 @@
 
 ;; functions
 
-(defun aux-apply-if-not-nil (fn val)
+(defun aux-apply-if-not-nil (fn val &optional default)
   (if val
-      (funcall fn val)))
+      (funcall fn val)
+    default))
+
+(defun aux-starts-with (string prefix)
+  (if (>= (length string) (length prefix))
+      (string= (substring string 0 (length prefix)) prefix)
+      nil))
 
 (provide 'aux)
