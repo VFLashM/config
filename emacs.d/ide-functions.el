@@ -156,11 +156,11 @@
   (interactive)
 
   ; flycheck
-  (setq-default flycheck-disabled-checkers '(python-flake8))
   (setq flycheck-highlighting-mode 'lines)
+  (global-flycheck-mode)
   (if (not (eq system-type 'windows-nt))
       (progn
-        (global-flycheck-mode)
+        (setq-default flycheck-disabled-checkers '(python-flake8)) ; disable flake8, use pylint instead
         (set-face-attribute 'flycheck-error nil :underline "red")
         (set-face-attribute 'flycheck-warning nil :underline "orange")))
 
