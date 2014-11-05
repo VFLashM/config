@@ -3,6 +3,7 @@
 (require 'vc)
 (require 'popup)
 (require 'fs)
+(require 'f)
 
 ;;; Code:
 
@@ -17,7 +18,7 @@
     (if (file-exists-p path)
         (with-temp-buffer 
           (insert-file-contents path)
-          (mapcar 'file-name-as-directory (mapcar 'expand-file-name (split-string (buffer-string) "\n" t))))
+          (mapcar 'file-name-as-directory (mapcar 'expand-file-name (mapcar 'f-glob (split-string (buffer-string) "\n" t)))))
       (write-region "" nil path))))
 
 (defun find-matching-permanent-project-for-path (path projects)
