@@ -31,7 +31,7 @@
 (defun is-project-root (path)
   (let ((dir-path (file-name-as-directory path)))
     (or
-     (file-exists-p (concat dir-path ".ropeproject"))
+     ;(file-exists-p (concat dir-path ".ropeproject"))
      (file-exists-p (concat dir-path ".git"))
      (file-exists-p (concat dir-path "SConstruct")))))
 
@@ -190,8 +190,8 @@
   (yas-global-mode 1)
   
   ; rope
-  (pymacs-load "ropemacs" "rope-")
-  (setq ropemacs-enable-autoimport t)
+  ;(pymacs-load "ropemacs" "rope-")
+  ;(setq ropemacs-enable-autoimport t)
   
   (ac-config-default)
   (add-hook 'python-mode-hook
@@ -207,7 +207,8 @@
               (define-key yas-minor-mode-map (kbd "C-`") 'yas-expand)
 
               ; rope/jedi bindings
-              (local-set-key (kbd "<C-return>") 'jedi:goto-definition)
-              (local-set-key (kbd "C-M-v") 'rope-extract-variable)
-              (local-set-key (kbd "C-M-n") 'rope-inline)
-              (local-set-key (kbd "<f6>") 'rope-rename))))
+              ;(local-set-key (kbd "<C-return>") 'jedi:goto-definition)
+              ;(local-set-key (kbd "C-M-v") 'rope-extract-variable)
+              ;(local-set-key (kbd "C-M-n") 'rope-inline)
+              ;(local-set-key (kbd "<f6>") 'rope-rename)
+              )))
