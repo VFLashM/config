@@ -207,7 +207,7 @@
               (define-key yas-minor-mode-map (kbd "C-`") 'yas-expand)
 
               ; rope/jedi bindings
-              ;(local-set-key (kbd "<C-return>") 'jedi:goto-definition)
+              (local-set-key (kbd "<C-return>") 'jedi:goto-definition)
               ;(local-set-key (kbd "C-M-v") 'rope-extract-variable)
               ;(local-set-key (kbd "C-M-n") 'rope-inline)
               ;(local-set-key (kbd "<f6>") 'rope-rename)
