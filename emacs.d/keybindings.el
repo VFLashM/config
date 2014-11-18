@@ -1,4 +1,4 @@
-(keyboard-translate ?\C-h ?\C-?) ;backspace fix
+(define-key key-translation-map [?\C-h] [?\C-?]) ;backspace fix
 
 ; compilation
 (global-set-key (kbd "<f5>") 'save-and-run)
