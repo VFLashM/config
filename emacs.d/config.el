@@ -58,3 +58,4 @@
 ;(global-set-key "\C-o" 'uim-mode)
 
 (setq w32-get-true-file-attributes nil)
+(setq diff-switches "-u")
