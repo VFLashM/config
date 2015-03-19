@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import sys
-import os
 import time
 import datetime
+import subprocess
 
 out = sys.stdout
 if len(sys.argv) > 1 and sys.argv[1] == '-e':
@@ -15,7 +15,7 @@ if len(sys.argv) == 1:
     sys.exit(1)
     
 before = time.time()
-rc = os.system(' '.join(sys.argv[1:]))
+rc = subprocess.call(sys.argv[1:])
 after = time.time()
 elapsed = after - before
 out.write('Execution took %.2f seconds (%s), rc=%s\n' % (elapsed, datetime.timedelta(seconds=elapsed), rc))
