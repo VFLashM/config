@@ -3,6 +3,7 @@
 (require 'vc)
 (require 'popup)
 (require 'fs)
+(require 'f)
 
 ;;; Code:
 
@@ -17,7 +18,7 @@
     (if (file-exists-p path)
         (with-temp-buffer 
           (insert-file-contents path)
-          (mapcar 'file-name-as-directory (mapcar 'expand-file-name (split-string (buffer-string) "\n" t))))
+          (mapcar 'file-name-as-directory (mapcar 'expand-file-name (aux-flatten (mapcar 'f-glob (split-string (buffer-string) "\n" t))))))
       (write-region "" nil path))))
 
 (defun find-matching-permanent-project-for-path (path projects)
@@ -30,7 +31,7 @@
 (defun is-project-root (path)
   (let ((dir-path (file-name-as-directory path)))
     (or
-     (file-exists-p (concat dir-path ".ropeproject"))
+     ;(file-exists-p (concat dir-path ".ropeproject"))
      (file-exists-p (concat dir-path ".git"))
      (file-exists-p (concat dir-path "SConstruct")))))
 
@@ -197,8 +198,8 @@
   (yas-global-mode 1)
   
   ; rope
-  (pymacs-load "ropemacs" "rope-")
-  (setq ropemacs-enable-autoimport t)
+  ;(pymacs-load "ropemacs" "rope-")
+  ;(setq ropemacs-enable-autoimport t)
   
   (ac-config-default)
   (add-hook 'python-mode-hook
@@ -215,6 +216,7 @@
 
               ; rope/jedi bindings
               (local-set-key (kbd "<C-return>") 'jedi:goto-definition)
-              (local-set-key (kbd "C-M-v") 'rope-extract-variable)
-              (local-set-key (kbd "C-M-n") 'rope-inline)
-              (local-set-key (kbd "<f6>") 'rope-rename))))
+              ;(local-set-key (kbd "C-M-v") 'rope-extract-variable)
+              ;(local-set-key (kbd "C-M-n") 'rope-inline)
+              ;(local-set-key (kbd "<f6>") 'rope-rename)
+              )))

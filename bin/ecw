@@ -1,7 +1,9 @@
 #!/bin/sh
+df=~/.emacs.xdisplay
 xwininfo -tree -root | grep -q emacs@$(hostname) 
-if [ $? -eq 0 ]; then
-    emacsclient -a "" -d $DISPLAY $*
+if [ $? -eq 0 -a -s "$df" ]; then
+    emacsclient -a "" -d $(cat "$df") $*
 else
     emacsclient -c -a "" -d $DISPLAY $*
+    echo $DISPLAY > "$df"
 fi

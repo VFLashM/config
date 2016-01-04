@@ -7,6 +7,7 @@ import pathspec
 IGNORED = set([
         '.git',
         '.svn',
+        'CVS',
         ])
 
 def not_ignored(names, spec):
