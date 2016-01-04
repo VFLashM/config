@@ -144,21 +144,27 @@
   "save, make and run"
   (interactive)
   (save-buffer)
-  (compile "scons -D -j 4 run")
+  (if (eq major-mode 'rust-mode)
+      (compile "cargo run")
+    (compile "scons -D -j 4 run"))
   (message "builded!"))
 
 (defun save-and-make ()
   "save and make"
   (interactive)
   (save-buffer)
-  (compile "scons -D -j 4 ")
+  (if (eq major-mode 'rust-mode)
+      (compile "cargo build")
+    (compile "scons -D -j 4 "))
   (message "builded!"))
 
 (defun save-and-test ()
   "save, make and test"
   (interactive)
   (save-buffer)
-  (compile "scons -D -j 4 test")
+  (if (eq major-mode 'rust-mode)
+      (compile "cargo test")
+    (compile "scons -D -j 4 test"))
   (message "tested!"))
 
 (defun save-and-compile ()
@@ -167,9 +173,11 @@
   (save-buffer)
   (if (eq major-mode 'python-mode)
       (compile (concat "pylint --msg-template=\"{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}\" " (buffer-file-name)))
+    (if (eq major-mode 'rust-mode)
+        (compile "cargo build")
       (compile (concat "scons -D "
-                   (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
-                   ".cpp")))
+                       (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
+                       ".cpp"))))
   (message "compiled!"))
 
 ;;; Entry point
@@ -178,11 +186,11 @@
   (interactive)
 
   ; flycheck
-  (setq-default flycheck-disabled-checkers '(python-flake8))
   (setq flycheck-highlighting-mode 'lines)
+  (global-flycheck-mode)
   (if (not (eq system-type 'windows-nt))
       (progn
-        (global-flycheck-mode)
+        (setq-default flycheck-disabled-checkers '(python-flake8)) ; disable flake8, use pylint instead
         (set-face-attribute 'flycheck-error nil :underline "red")
         (set-face-attribute 'flycheck-warning nil :underline "orange")))
 

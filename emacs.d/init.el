@@ -41,4 +41,6 @@
 
 (load-file (concat config-dir "keybindings.el"))
 
+(load-file (concat config-dir "rust-mode.el"))
+
 (add-hook 'after-init-hook 'setup-ide)
