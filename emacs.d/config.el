@@ -26,12 +26,13 @@
 (setq scroll-conservatively 50)               ;; smooth scroll
 (setq scroll-perspective-screen-position 't)
 
+(setq-default line-spacing 5)
 (if (display-graphic-p) 
     (set-frame-font "DejaVu Sans Mono-10"))
 (if (display-graphic-p)
     (set-face-attribute 'default nil :font "DejaVu Sans Mono-10"))
 (if (display-graphic-p)
-    (set-face-attribute 'default nil :height 90))
+    (set-face-attribute 'default nil :height 95))
 ;;(set-frame-font "-xos4-terminus-medium-r-normal--20-200-72-72-c-100-iso10646-1")
 ;;(set-frame-font "-*-terminus-medium-r-normal--20-*-*-*-c-*-*-*")
 
