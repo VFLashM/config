@@ -26,7 +26,7 @@
 
 (setq config-dir (file-name-directory load-file-name))
 
-(add-to-list 'load-path config-dir)
+;(add-to-list 'load-path config-dir)
 (add-to-list 'load-path (concat config-dir "tomorrow-theme"))
 
 (load-file (concat config-dir "tomorrow-theme/tomorrow-night-eighties-theme.el"))

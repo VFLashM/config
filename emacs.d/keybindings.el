@@ -63,8 +63,8 @@
 
 (global-set-key [M-down] (lambda () (interactive) (scroll-other-window 1)))
 (global-set-key [M-up] (lambda () (interactive) (scroll-other-window-down 1)))
-(global-set-key [C-next] 'cycle-buffers-next)
-(global-set-key [C-prior] 'cycle-buffers-prev)
+(global-set-key [C-next] 'cycle-buffers-prev)
+(global-set-key [C-prior] 'cycle-buffers-next)
 (global-set-key [C-S-next] 'buffer-menu)
 (global-set-key [C-S-prior] 'buffer-menu-other-window)
 

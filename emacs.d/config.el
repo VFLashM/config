@@ -27,14 +27,17 @@
 (setq scroll-perspective-screen-position 't)
 
 (setq-default line-spacing 5)
-(if (display-graphic-p) 
-    (set-frame-font "DejaVu Sans Mono-10"))
-(if (display-graphic-p)
-    (set-face-attribute 'default nil :font "DejaVu Sans Mono-10"))
-(if (display-graphic-p)
-    (set-face-attribute 'default nil :height 95))
-;;(set-frame-font "-xos4-terminus-medium-r-normal--20-200-72-72-c-100-iso10646-1")
-;;(set-frame-font "-*-terminus-medium-r-normal--20-*-*-*-c-*-*-*")
+
+(setq graphics-init-done nil)
+(defun setup-frame (&optional frame)
+  (if (and (not graphics-init-done) (display-graphic-p frame))
+      (progn
+        (set-frame-font "DejaVu Sans Mono-10")
+        (set-face-attribute 'default nil :font "DejaVu Sans Mono-10")
+        (set-face-attribute 'default nil :height 95)
+        (setq graphics-init-done t))))
+;(add-hook 'after-make-frame-functions 'setup-frame)
+(setup-frame)
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
