@@ -30,6 +30,7 @@
 
 (setq graphics-init-done nil)
 (defun setup-frame (&optional frame)
+  (interactive)
   (if (and (not graphics-init-done) (display-graphic-p frame))
       (progn
         (set-frame-font "DejaVu Sans Mono-10")
