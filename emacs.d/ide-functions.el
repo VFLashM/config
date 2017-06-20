@@ -16,7 +16,7 @@
 (defun permanent-projects ()
   (let ((path (substitute-in-file-name "$HOME/.emacs.projects")))
     (if (file-exists-p path)
-        (with-temp-buffer 
+        (with-temp-buffer
           (insert-file-contents path)
           (mapcar 'file-name-as-directory (mapcar 'expand-file-name (aux-flatten (mapcar 'f-glob (split-string (buffer-string) "\n" t))))))
       (write-region "" nil path))))
@@ -42,10 +42,10 @@
         (if (is-project-root path)
             (file-name-as-directory path)
           (get-file-project-dir (fs-dirname path))))))
-  
+
 (defun get-current-project-dir ()
   (get-file-project-dir (or (buffer-file-name (current-buffer)) default-directory)))
-  
+
 (defun choose-project ()
   (choose-variant
    (delete-dups
@@ -82,7 +82,7 @@
 
 (defun search-in-project (project regexp files)
   (interactive
-   (progn 
+   (progn
      (grep-compute-defaults)
      (let*
          ((project (get-or-choose-project-dir))
@@ -196,11 +196,18 @@
 
   ; yas
   (yas-global-mode 1)
-  
+
+  ; flycheck c++11
+  (add-hook 'c++-mode-hook
+            (lambda ()
+              (setq flycheck-clang-language-standard "c++11")
+              (setq irony-additional-clang-options '("-std=c++11"))
+              (setq flycheck-gcc-language-standard "c++11")))
+
   ; rope
   ;(pymacs-load "ropemacs" "rope-")
   ;(setq ropemacs-enable-autoimport t)
-  
+
   (ac-config-default)
   (add-hook 'python-mode-hook
             (lambda ()
@@ -219,4 +226,7 @@
               ;(local-set-key (kbd "C-M-v") 'rope-extract-variable)
               ;(local-set-key (kbd "C-M-n") 'rope-inline)
               ;(local-set-key (kbd "<f6>") 'rope-rename)
+
+              ; whitespace cleanup
+              (add-hook 'before-save-hook 'whitespace-cleanup nil 'local)
               )))
