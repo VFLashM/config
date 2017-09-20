@@ -9,6 +9,7 @@
                      markdown-mode
                      python-environment
                      jedi
+		     magit
                      f))
 
 (require 'package)
@@ -44,3 +45,5 @@
 (load-file (concat config-dir "rust-mode.el"))
 
 (add-hook 'after-init-hook 'setup-ide)
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
