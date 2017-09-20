@@ -1,20 +1,28 @@
-(setq package-list '(yasnippet
-                     lua-mode
-                     flycheck
-                     cl
+(setq package-list '(cl
                      cl-lib
-                     ;pymacs
-                     auto-complete
+                     f
                      popup
+                     
+                     lua-mode
                      markdown-mode
+
+                     yasnippet
+                     flycheck
+                     ;auto-complete
+                     company
+
+                     ;pymacs
+                     ;jedi
                      python-environment
-                     jedi
+                     company-jedi
 		     magit
-                     f))
+                     rust-mode
+                     racer
+                     flycheck-rust))
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 
 (package-initialize)
 
@@ -41,8 +49,6 @@
 (load-file (concat config-dir "ide-fast-search.el"))
 
 (load-file (concat config-dir "keybindings.el"))
-
-(load-file (concat config-dir "rust-mode.el"))
 
 (add-hook 'after-init-hook 'setup-ide)
 (put 'upcase-region 'disabled nil)
