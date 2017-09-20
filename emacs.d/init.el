@@ -8,6 +8,7 @@
 
                      yasnippet
                      flycheck
+                     magit
                      ;auto-complete
                      company
 
@@ -15,7 +16,7 @@
                      ;jedi
                      python-environment
                      company-jedi
-		     magit
+                     
                      rust-mode
                      racer
                      flycheck-rust))
@@ -50,6 +51,3 @@
 
 (load-file (concat config-dir "keybindings.el"))
 
-(add-hook 'after-init-hook 'setup-ide)
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)

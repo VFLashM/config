@@ -83,4 +83,17 @@
             (define-key yas-minor-mode-map (kbd "C-`") 'yas-expand)
             
             (local-set-key (kbd "<C-return>") 'jedi:goto-definition)
+
+            (add-hook 'before-save-hook 'whitespace-cleanup nil 'local)
             ))
+
+; flycheck c++11^M
+(add-hook 'c++-mode-hook^M
+          (lambda ()^M
+            (setq flycheck-clang-language-standard "c++11")
+            (setq irony-additional-clang-options '("-std=c++11"))
+            (setq flycheck-gcc-language-standard "c++11")))
+
+; magit
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
